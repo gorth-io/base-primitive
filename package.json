@@ -198,6 +198,14 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    },
+    "next-themes": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.4",
