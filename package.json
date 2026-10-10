@@ -137,6 +137,9 @@
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
+    "typecheck:http": "tsc --project tsconfig.http.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "shadcn": "pnpm dlx shadcn@latest add -a -o",
     "shadcn:ui": "pnpm dlx shadcn@latest add -o -p src/components/ui",
     "shadcn:ui:all": "pnpm dlx shadcn@latest add -a -o -p src/components/ui",
@@ -161,6 +164,7 @@
     "@tanstack/react-router": "^1.170.42",
     "@tanstack/react-table": "^9.2.8",
     "@tanstack/react-virtual": "^3.14.14",
+    "axios": "^1.20.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -216,7 +220,8 @@
     "prettier": "^3.9.9",
     "tailwindcss": "^4.3.3",
     "tsdown": "^0.23.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.3"
   },
   "packageManager": "pnpm@10.33.4"
 }
