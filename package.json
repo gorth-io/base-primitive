@@ -132,6 +132,11 @@
       "import": "./dist/components/illustration/*.js",
       "default": "./dist/components/illustration/*.js"
     },
+    "./miscellaneous/*": {
+      "types": "./dist/components/miscellaneous/*.d.ts",
+      "import": "./dist/components/miscellaneous/*.js",
+      "default": "./dist/components/miscellaneous/*.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
