@@ -23,10 +23,15 @@ export function OrbitAvatar({
       aria-label={item.title}
       title={item.title}
       style={{ height: size, width: size, backgroundColor: item.description }}
-      className="rounded-full after:rounded-full"
+      className="size-9 rounded-md after:rounded-md after:mix-blend-normal dark:after:mix-blend-normal"
     >
-      <AvatarImage src={item.url || undefined} alt={item.title} />
+      <AvatarImage
+        className="rounded-md"
+        src={item.url || undefined}
+        alt={item.title}
+      />
       <AvatarFallback
+        className="rounded-md"
         style={{
           backgroundColor: item.description,
           color: item.description ? "#ffffff" : undefined,
@@ -34,7 +39,8 @@ export function OrbitAvatar({
       >
         <Icon
           aria-hidden="true"
-          style={{ width: size / 2, height: size / 2 }}
+          className="size-4"
+          style={{ width: 16, height: 16 }}
         />
       </AvatarFallback>
     </Avatar>

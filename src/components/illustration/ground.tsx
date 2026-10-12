@@ -42,13 +42,19 @@ export const IllustrationsBackground = ({
                 r={0}
                 stroke="var(--muted-foreground)"
                 strokeWidth={1}
+                initial={{ r: 0, opacity: 0 }}
                 animate={{
-                  r: [0, (ringSize ?? 144) / 2, (ringSize ?? 144) / 2],
-                  opacity: [1, 0, 0],
+                  r: [
+                    0,
+                    (ringSize ?? 144) / 15,
+                    (ringSize ?? 144) / 2,
+                    (ringSize ?? 144) / 2,
+                  ],
+                  opacity: [0, 1, 0, 0],
                 }}
                 transition={{
                   duration: 4.8,
-                  times: [0, 0.375, 1],
+                  times: [0, 0.05, 0.375, 1],
                   ease: "linear",
                   repeat: Infinity,
                   delay,

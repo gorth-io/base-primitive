@@ -75,7 +75,7 @@ export function Orbiting({
               } as React.CSSProperties
             }
             className={cn(
-              `absolute inset-0 flex animate-spin items-center justify-center rounded-full motion-reduce:[animation-play-state:paused]`,
+              `absolute inset-0 flex animate-spin items-center justify-center motion-reduce:[animation-play-state:paused]`,
               { "[animation-direction:reverse]": reverse },
               className,
             )}
