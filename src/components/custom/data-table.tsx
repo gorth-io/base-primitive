@@ -66,7 +66,7 @@ import { Button } from "@/components/custom/button";
 import { Badge } from "@/components/custom/badge";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/cn";
 
 import {
   ArrowUpDown,
@@ -97,7 +97,7 @@ import type {
   DataTableProps,
   DataTableSortButtonProps,
   DataTableViewOptionsProps,
-} from "@/lib/utils/interface";
+} from "@/utils/interface";
 
 export const dataTableFeatures: DataTableFeatures = tableFeatures({
   columnFilteringFeature,

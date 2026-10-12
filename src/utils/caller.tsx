@@ -8,7 +8,7 @@ import axios, {
   type Method,
   type ResponseType,
 } from "axios";
-import { toast } from "../../components/custom/toast";
+import { toast } from "../components/custom/toast";
 import {
   useMutation as useMutationDefault,
   useQuery as useQueryDefault,
@@ -18,7 +18,7 @@ import {
   type UseMutationResult,
   type UseQueryOptions,
   type UseQueryResult,
-} from "../../cores/tanstack/query";
+} from "../cores/tanstack/query";
 
 export type HttpMethod =
   "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";

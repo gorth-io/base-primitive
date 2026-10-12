@@ -22,7 +22,7 @@ import {
   useSidebar,
 } from "@/components/custom/sidebar"
 import { Switch } from "@/components/ui/switch"
-import { MessSidebarProps } from "@/lib/utils/interface"
+import { MessSidebarProps } from "@/utils/interface"
 import { cn } from "cn"
 
 export function MessSidebar({ data, auth, ...props }: MessSidebarProps) {

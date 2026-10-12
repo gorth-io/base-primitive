@@ -33,7 +33,7 @@ import {
   Camera,
   Mail,
 } from "lucide-react";
-import { HeaderProps } from "@/lib/utils/interface";
+import { HeaderProps } from "@/utils/interface";
 import { ModeSwitcher } from "@/components/element/mode-toggle";
 import { Customizer } from "@/components/element/customizer";
 

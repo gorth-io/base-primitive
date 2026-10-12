@@ -20,7 +20,7 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { NavSubItem } from "@/lib/utils/interface";
+import { NavSubItem } from "@/utils/interface";
 
 const shortcuts = [
   {

@@ -3,7 +3,7 @@
 import React, { ReactNode, useEffect } from "react"
 import Image from "next/image"
 import { Separator } from "@/components/ui/separator"
-import { HeaderProps } from "@/lib/utils/interface";
+import { HeaderProps } from "@/utils/interface";
 import { NavUser } from "@/components/dashboard/nav-user";
 import { Customizer } from "@/components/element/customizer";
 import { ModeSwitcher } from "@/components/element/mode-toggle";

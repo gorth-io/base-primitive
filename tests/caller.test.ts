@@ -8,7 +8,7 @@ import {
   normalizeCallerError,
   useMutation,
   useQuery,
-} from "../src/lib/utils/caller";
+} from "@/utils/caller";
 
 const hooks = vi.hoisted(() => ({
   query: vi.fn(),

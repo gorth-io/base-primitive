@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/custom/sidebar"
-import { NavMainItem } from "@/lib/utils/interface";
+import { NavMainItem } from "@/utils/interface";
 
 interface NavCoreProps extends React.ComponentPropsWithoutRef<typeof SidebarGroup> {
   items: NavMainItem[];

@@ -17,7 +17,7 @@ import {
 import { SidebarProvider, SidebarTrigger } from "@/components/custom/sidebar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "cn";
-import type { AppSidebarProps } from "@/lib/utils/interface";
+import type { AppSidebarProps } from "@/utils/interface";
 
 export function DrawSidebar({
   data,

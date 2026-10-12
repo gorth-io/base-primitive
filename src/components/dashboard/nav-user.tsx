@@ -3,7 +3,7 @@
 import React, { JSX } from "react";
 import Link from "next/link";
 import { cn } from "cn";
-import { formatUserInitials } from "@/lib/utils/formatter";
+import { formatUserInitials } from "@/utils/formatter";
 import {
   Avatar,
   AvatarFallback,
@@ -44,7 +44,7 @@ import type {
   NavDropdown,
   NavMainItem,
   UserProps,
-} from "@/lib/utils/interface";
+} from "@/utils/interface";
 
 export function NavUserX({ user }: { user: UserProps }) {
   const { isMobile } = useSidebar();

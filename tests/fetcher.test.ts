@@ -1,6 +1,6 @@
 import axios, { AxiosHeaders, type AxiosResponse } from "axios";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { fetcher, toWebResponse } from "../src/lib/utils/fetcher";
+import { fetcher, toWebResponse } from "@/utils/fetcher";
 
 function response(
   data: unknown,

@@ -5,8 +5,8 @@
     "noEmit": true
   },
   "include": [
-    "src/lib/utils/caller.tsx",
-    "src/lib/utils/fetcher.ts",
+    "src/utils/caller.tsx",
+    "src/utils/fetcher.ts",
     "tests/**/*.ts",
     "vitest.config.ts"
   ],

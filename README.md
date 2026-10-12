@@ -56,7 +56,7 @@ existing app-local utilities are not migrated automatically.
 ```tsx
 "use client";
 
-import { createCaller } from "@gorth/primitive/lib/utils/caller";
+import { createCaller } from "@gorth/primitive/utils/caller";
 
 export const { caller, http, createQueryService, createMutationService } =
   createCaller({
@@ -100,7 +100,7 @@ to integrate an app's own toaster. A no-op `notify` disables notifications.
 ### Server / Next.js Route Handler
 
 ```ts
-import { fetcher, toWebResponse } from "@gorth/primitive/lib/utils/fetcher";
+import { fetcher, toWebResponse } from "@gorth/primitive/utils/fetcher";
 
 export async function GET() {
   const response = await fetcher({

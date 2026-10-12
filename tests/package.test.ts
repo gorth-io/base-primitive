@@ -6,17 +6,17 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@gorth/primitive/cores/tanstack/query";
-import { createCaller } from "@gorth/primitive/lib/utils/caller";
-import { fetcher, toWebResponse } from "@gorth/primitive/lib/utils/fetcher";
+import { createCaller } from "@gorth/primitive/utils/caller";
+import { fetcher, toWebResponse } from "@gorth/primitive/utils/fetcher";
 
 describe("built public exports", () => {
   it("publishes a client-only caller and UI-free server fetcher", () => {
     const callerSource = readFileSync(
-      new URL("../dist/lib/utils/caller.js", import.meta.url),
+      new URL("../dist/utils/caller.js", import.meta.url),
       "utf8",
     );
     const fetcherSource = readFileSync(
-      new URL("../dist/lib/utils/fetcher.js", import.meta.url),
+      new URL("../dist/utils/fetcher.js", import.meta.url),
       "utf8",
     );
     expect(callerSource).toMatch(/^['"]use client['"]/);

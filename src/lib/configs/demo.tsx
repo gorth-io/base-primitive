@@ -8,7 +8,7 @@
 //   createQueryService,
 //   useMutation,
 //   useQuery,
-// } from "@/lib/utils/caller"
+// } from "@/utils/caller"
 
 // export interface Post {
 //   id: string

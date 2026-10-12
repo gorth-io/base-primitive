@@ -12,7 +12,7 @@
 // 	BreadcrumbSeparator,
 // } from "@/components/ui/breadcrumb"
 // import { appGlobal } from "@/lib/constants"
-// import { createBreadcrumbs } from "@/lib/utils/linkers"
+// import { createBreadcrumbs } from "@/utils/linkers"
 
 // export function Breadcrumbar() {
 // 	const pathname = usePathname()

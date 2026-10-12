@@ -30,7 +30,7 @@ import {
   useSidebar,
 } from "@/components/custom/sidebar"
 import { cn } from "cn"
-import { NavCoreProps, NavMainItem } from "@/lib/utils/interface"
+import { NavCoreProps, NavMainItem } from "@/utils/interface"
 
 function isPathActive(pathname: string, url: string) {
   return url !== "#" && pathname === url

@@ -18,6 +18,8 @@ export default defineConfig({
     "src/hooks/*.tsx",
     "src/lib/**/*.ts",
     "src/lib/**/*.tsx",
+    "src/utils/**/*.ts",
+    "src/utils/**/*.tsx",
     "src/cores/**/*.ts",
     "src/modules/*.ts",
     "src/pages/*.tsx",

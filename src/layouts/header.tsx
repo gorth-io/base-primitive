@@ -24,7 +24,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { cn } from "cn"
-import { HeaderProps, NavMainItem } from "@/lib/utils/interface"
+import { HeaderProps, NavMainItem } from "@/utils/interface"
 import { useLayout } from "@/providers/layout"
 
 function HeaderNavigation({ items }: { items: NavMainItem[] }) {
