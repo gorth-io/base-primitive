@@ -66,21 +66,10 @@ export const demoData: OrbitData = {
 
 export interface OrbitProps extends AvatarOrbitProps {
   data?: OrbitData;
-  /** Ring diameters in pixels, ordered from inner to outer. */
-  ring?: readonly [number?, number?, number?];
 }
 
-export const OrbitDemo = ({
-  data = demoData,
-  ring = [],
-  ...props
-}: OrbitProps) => {
-  const diameters = [160, 280, 400].map((fallback, index) => {
-    const value = ring[index];
-    return value !== undefined && Number.isFinite(value) && value > 0
-      ? value
-      : fallback;
-  });
+export const OrbitDemo = ({ data = demoData, ...props }: OrbitProps) => {
+  const diameters = [160, 280, 400];
   const containerSize = Math.max(
     124,
     ...(props.orbitData?.map(
