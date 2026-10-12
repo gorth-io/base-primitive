@@ -64,6 +64,9 @@ export function Orbiting({
           <div
             style={
               {
+                position: "absolute",
+                inset: 0,
+                transformOrigin: "50% 50%",
                 animationDuration: `${calculatedDuration}s`,
                 "--radius": radius,
                 "--angle": angle,
@@ -72,15 +75,20 @@ export function Orbiting({
               } as React.CSSProperties
             }
             className={cn(
-              `absolute flex transform-gpu animate-spin items-center justify-center rounded-full motion-reduce:[animation-play-state:paused]`,
+              `absolute inset-0 flex animate-spin items-center justify-center rounded-full motion-reduce:[animation-play-state:paused]`,
               { "[animation-direction:reverse]": reverse },
               className,
             )}
             {...props}
           >
             <div
-              className="absolute flex items-center justify-center [animation-play-state:inherit]"
+              className="absolute top-1/2 left-1/2 flex size-0 items-center justify-center [animation-play-state:inherit]"
               style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                width: 0,
+                height: 0,
                 transform: `rotate(${angle}deg) translateY(${radius}px)`,
               }}
             >
