@@ -13,34 +13,40 @@ export type AvatarItem = NavSubItem;
 export function OrbitAvatar({
   item,
   size = 36,
+  iconSize = 16,
 }: {
   item: NavSubItem;
   size?: number;
+  iconSize?: number;
 }) {
   const Icon = item.icon ?? UserRound;
+  const backgroundColor =
+    item.description === "#" ? "transparent" : item.description;
+  const iconColor =
+    item.description && item.description !== "#" ? "#ffffff" : "currentColor";
   return (
     <Avatar
       aria-label={item.title}
       title={item.title}
-      style={{ height: size, width: size, backgroundColor: item.description }}
-      className="size-9 rounded-md after:rounded-md after:mix-blend-normal dark:after:mix-blend-normal"
+      style={{ height: size, width: size, backgroundColor }}
+      className="size-9 rounded-full after:rounded-full"
     >
       <AvatarImage
-        className="rounded-md"
+        className="rounded-full"
         src={item.url || undefined}
         alt={item.title}
       />
       <AvatarFallback
-        className="rounded-md"
+        className="rounded-full"
         style={{
-          backgroundColor: item.description,
-          color: item.description ? "#ffffff" : undefined,
+          backgroundColor,
+          color: iconColor,
         }}
       >
         <Icon
           aria-hidden="true"
-          className="size-4"
-          style={{ width: 16, height: 16 }}
+          className={iconSize === 36 ? "size-9" : "size-4"}
+          style={{ width: iconSize, height: iconSize }}
         />
       </AvatarFallback>
     </Avatar>
