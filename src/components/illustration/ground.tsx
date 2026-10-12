@@ -1,30 +1,63 @@
 "use client"
 
+import type { CSSProperties } from "react"
 import { BlinkingParticles } from "./blink"
+import { motion } from "motion/react"
 
 export type IllustrationBackground =
   "ripple" | "gradient" | "particles" | "grid" | "none"
 
 export type BackgroundProps = {
   background?: IllustrationBackground | IllustrationBackground[]
+  ringSize?: number
 }
 
 export const IllustrationsBackground = ({
   background = "none",
+  ringSize,
 }: BackgroundProps) => {
   const backgrounds = Array.isArray(background) ? background : [background]
 
   return backgrounds.some((value) => value !== "none") ? (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute top-1/2 left-1/2 size-full max-h-88 max-w-88 -translate-x-1/2 -translate-y-1/2"
+      style={
+        ringSize === undefined
+          ? undefined
+          : { width: ringSize, height: ringSize }
+      }
+      className="pointer-events-none absolute top-1/2 left-1/2 size-full -translate-x-1/2 -translate-y-1/2"
     >
-      {backgrounds.includes("ripple") && (
-        <>
-          <div className="absolute top-1/2 left-1/2 -z-1 size-18 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border border-border opacity-70 [animation-duration:2s] motion-reduce:animate-none" />
-          <div className="absolute top-1/2 left-1/2 -z-1 size-15 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full border border-border [animation-delay:0.3s] [animation-duration:2s] motion-reduce:animate-none" />
-        </>
-      )}
+      {backgrounds.includes("ripple") &&
+        (ringSize === undefined || ringSize > 0) && (
+          <svg
+            className="absolute inset-0 -z-1 size-full overflow-visible"
+            fill="none"
+          >
+            {[0, 0.5, 1].map((delay, index) => (
+              <motion.circle
+                key={index}
+                cx="50%"
+                cy="50%"
+                r={0}
+                stroke="var(--muted-foreground)"
+                strokeWidth={1}
+                animate={{
+                  r: [0, (ringSize ?? 144) / 2, (ringSize ?? 144) / 2],
+                  opacity: [1, 0, 0],
+                }}
+                transition={{
+                  duration: 4.8,
+                  times: [0, 0.375, 1],
+                  ease: "linear",
+                  repeat: Infinity,
+                  delay,
+                }}
+                className="motion-reduce:hidden"
+              />
+            ))}
+          </svg>
+        )}
 
       {backgrounds.includes("gradient") && (
         <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,var(--muted-foreground),transparent_50%)] opacity-20" />
@@ -35,8 +68,9 @@ export const IllustrationsBackground = ({
       )}
 
       {backgrounds.includes("particles") && (
-        <div className="absolute -inset-6 rounded-full max-sm:-inset-4">
+        <div className="absolute inset-0 overflow-hidden rounded-full">
           <BlinkingParticles
+            key={ringSize}
             quantity={30}
             color="#808080"
             size={1}

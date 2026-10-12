@@ -15,7 +15,7 @@ export type AvatarItem = NavSubItem
 
 export function OrbitAvatar({
   item,
-  size = 32,
+  size = 36,
 }: {
   item: NavSubItem
   size?: number
@@ -26,7 +26,7 @@ export function OrbitAvatar({
       aria-label={item.title}
       title={item.title}
       style={{ height: size, width: size, backgroundColor: item.description }}
-      className="rounded-full after:rounded-full"
+      className="rounded-md after:rounded-md"
     >
       <AvatarImage src={item.url || undefined} alt={item.title} />
       <AvatarFallback
@@ -80,7 +80,7 @@ export const AvatarOrbit = (props: AvatarOrbitProps) => {
 
   const containerSize = Math.max(
     124,
-    (outerRing?.ringSize ?? 0) + (outerRing?.avatarSize ?? 32)
+    (outerRing?.ringSize ?? 0) + (outerRing?.avatarSize ?? 36)
   )
 
   return (
@@ -117,7 +117,7 @@ export const AvatarOrbit = (props: AvatarOrbitProps) => {
             <OrbitAvatar
               key={avatarIndex}
               item={avatar}
-              size={ring.avatarSize ?? 32}
+              size={ring.avatarSize ?? 36}
             />
           ))}
         </Orbiting>
