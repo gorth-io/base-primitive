@@ -127,6 +127,11 @@
       "import": "./src/styles/globals.css",
       "default": "./src/styles/globals.css"
     },
+    "./illustration/*": {
+      "types": "./dist/components/illustration/*.d.ts",
+      "import": "./dist/components/illustration/*.js",
+      "default": "./dist/components/illustration/*.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [

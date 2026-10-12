@@ -1,5 +1,5 @@
-import { AvatarOrbit, AvatarOrbitProps, OrbitAvatar } from "./item"
-import { NavSubItem } from "@/utils/interface"
+import { AvatarOrbit, OrbitAvatar, type AvatarOrbitProps } from "./item";
+import type { NavSubItem } from "@/utils/interface";
 import {
   Activity,
   Bell,
@@ -20,18 +20,13 @@ import {
   Shield,
   Users,
   Zap,
-  type LucideIcon,
-} from "lucide-react"
-
-export interface OrbitProps extends AvatarOrbitProps {
-  data: OrbitData
-}
+} from "lucide-react";
 
 export interface OrbitData {
-  brand: NavSubItem
-  navMain: NavSubItem[]
-  navSecondary: NavSubItem[]
-  navSignal: NavSubItem[]
+  brand: NavSubItem;
+  navMain: NavSubItem[];
+  navSecondary: NavSubItem[];
+  navSignal: NavSubItem[];
 }
 
 export const demoData: OrbitData = {
@@ -65,9 +60,13 @@ export const demoData: OrbitData = {
     { title: "Guides", url: "", icon: BookOpen, description: "#9f1239" },
     { title: "Help", url: "", icon: CircleHelp, description: "#52525b" },
   ],
+};
+
+export interface OrbitProps extends AvatarOrbitProps {
+  data?: OrbitData;
 }
 
-const OrbitDemo = ({ data }: { data: OrbitData }) => {
+export const OrbitDemo = ({ data = demoData, ...props }: OrbitProps) => {
   return (
     <div className="relative size-78 sm:size-104">
       <AvatarOrbit
@@ -77,36 +76,37 @@ const OrbitDemo = ({ data }: { data: OrbitData }) => {
         orbitData={[
           {
             dashed: true,
-            ringSize: 140,
+            ringSize: 160,
             avatars: data.navMain.slice(0, 3),
             avatarSize: 36,
-            duration: 20,
+            duration: 16,
           },
           {
             dashed: true,
-            ringSize: 260,
+            ringSize: 280,
             avatars: data.navSecondary.slice(0, 6),
             avatarSize: 36,
-            duration: 30,
+            duration: 24,
             reverse: true,
           },
           {
             dashed: true,
-            ringSize: 380,
+            ringSize: 400,
             avatars: data.navSignal.slice(0, 9),
             avatarSize: 36,
-            duration: 40,
+            duration: 32,
           },
         ]}
+        {...props}
       >
         <div className="relative z-10 rounded-full shadow-lg">
-          <OrbitAvatar item={data.brand} size={48} />
+          <OrbitAvatar item={data.brand} size={54} />
         </div>
       </AvatarOrbit>
     </div>
-  )
-}
+  );
+};
 
-export function Orbit(props: AvatarOrbitProps) {
-  return <AvatarOrbit {...props} />
+export function Orbit(props: OrbitProps) {
+  return <OrbitDemo {...props} />;
 }

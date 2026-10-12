@@ -1,21 +1,21 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "cn"
+import { cn } from "cn";
 
 export interface OrbitingProps extends React.HTMLAttributes<HTMLDivElement> {
-  className?: string
-  children?: React.ReactNode
-  reverse?: boolean
-  duration?: number
-  delay?: number
-  radius?: number
-  dashed?: boolean
-  dashedGap?: number
-  path?: boolean
-  speed?: number
-  strokeColor?: string
-  strokeWidth?: number
-  startingAngle?: number
+  className?: string;
+  children?: React.ReactNode;
+  reverse?: boolean;
+  duration?: number;
+  delay?: number;
+  radius?: number;
+  dashed?: boolean;
+  dashedGap?: number;
+  path?: boolean;
+  speed?: number;
+  strokeColor?: string;
+  strokeWidth?: number;
+  startingAngle?: number;
 }
 
 export function Orbiting({
@@ -35,7 +35,7 @@ export function Orbiting({
   startingAngle = 0,
   ...props
 }: OrbitingProps) {
-  const calculatedDuration = duration / speed
+  const calculatedDuration = duration / speed;
 
   return (
     <>
@@ -58,13 +58,13 @@ export function Orbiting({
       )}
       {React.Children.map(children, (child, index) => {
         const angle =
-          (360 / React.Children.count(children)) * index + startingAngle
+          (360 / React.Children.count(children)) * index + startingAngle;
 
         return (
           <div
             style={
               {
-                "--duration": calculatedDuration,
+                animationDuration: `${calculatedDuration}s`,
                 "--radius": radius,
                 "--angle": angle,
                 animationDelay: `${delay}s`,
@@ -72,16 +72,39 @@ export function Orbiting({
               } as React.CSSProperties
             }
             className={cn(
-              `absolute flex transform-gpu animate-orbit items-center justify-center rounded-full motion-reduce:[animation-play-state:paused]`,
+              `absolute flex transform-gpu animate-spin items-center justify-center rounded-full motion-reduce:[animation-play-state:paused]`,
               { "[animation-direction:reverse]": reverse },
-              className
+              className,
             )}
             {...props}
           >
-            {child}
+            <div
+              className="absolute flex items-center justify-center [animation-play-state:inherit]"
+              style={{
+                transform: `rotate(${angle}deg) translateY(${radius}px)`,
+              }}
+            >
+              <div
+                className="flex items-center justify-center [animation-play-state:inherit]"
+                style={{ transform: `rotate(${-angle}deg)` }}
+              >
+                <div
+                  className={cn(
+                    "flex animate-spin items-center justify-center [animation-duration:inherit] [animation-play-state:inherit] motion-reduce:[animation-play-state:paused]",
+                    { "[animation-direction:reverse]": !reverse },
+                  )}
+                  style={{
+                    animationDuration: `${calculatedDuration}s`,
+                    animationDelay: `${delay}s`,
+                  }}
+                >
+                  {child}
+                </div>
+              </div>
+            </div>
           </div>
-        )
+        );
       })}
     </>
-  )
+  );
 }

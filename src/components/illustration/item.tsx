@@ -1,32 +1,29 @@
-import * as React from "react"
+import * as React from "react";
+import { UserRound } from "lucide-react";
+import type { NavSubItem } from "@/utils/interface";
 
-import {
-  IllustrationsBackground,
-  type BackgroundProps,
-} from "./ground"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/custom/avatar"
-import { Orbiting } from "./orbiting"
-import { NavSubItem } from "@/utils/interface"
+import { IllustrationsBackground, type BackgroundProps } from "./ground";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Orbiting } from "./orbiting";
 
-import { cn } from "cn"
-import { UserRound } from "lucide-react"
+import { cn } from "cn";
 
-export type AvatarItem = NavSubItem
+export type AvatarItem = NavSubItem;
 
 export function OrbitAvatar({
   item,
-  size = 36,
+  size = 32,
 }: {
-  item: NavSubItem
-  size?: number
+  item: NavSubItem;
+  size?: number;
 }) {
-  const Icon = item.icon ?? UserRound
+  const Icon = item.icon ?? UserRound;
   return (
     <Avatar
       aria-label={item.title}
       title={item.title}
       style={{ height: size, width: size, backgroundColor: item.description }}
-      className="rounded-md after:rounded-md"
+      className="rounded-full after:rounded-full"
     >
       <AvatarImage src={item.url || undefined} alt={item.title} />
       <AvatarFallback
@@ -41,24 +38,24 @@ export function OrbitAvatar({
         />
       </AvatarFallback>
     </Avatar>
-  )
+  );
 }
 
 export interface RingConfig {
-  ringSize?: number
-  avatarSize?: number
-  avatars?: AvatarItem[]
-  duration?: number
-  reverse?: boolean
-  dashed?: boolean
+  ringSize?: number;
+  avatarSize?: number;
+  avatars?: AvatarItem[];
+  duration?: number;
+  reverse?: boolean;
+  dashed?: boolean;
 }
 
 export interface AvatarOrbitProps extends React.HTMLAttributes<HTMLDivElement> {
-  orbitData?: RingConfig[]
-  background?: BackgroundProps["background"]
-  isometric?: boolean
-  trigger?: "default" | "orbit" | "hover"
-  children?: React.ReactElement
+  orbitData?: RingConfig[];
+  background?: BackgroundProps["background"];
+  isometric?: boolean;
+  trigger?: "default" | "orbit" | "hover";
+  children?: React.ReactElement;
 }
 
 export const AvatarOrbit = (props: AvatarOrbitProps) => {
@@ -71,17 +68,22 @@ export const AvatarOrbit = (props: AvatarOrbitProps) => {
     className,
     style,
     ...rest
-  } = props
+  } = props;
 
-  const outerRing = avatarConfig?.reduce<RingConfig | undefined>(
-    (max, ring) => ((ring.ringSize ?? 0) > (max?.ringSize ?? 0) ? ring : max),
-    undefined
-  )
+  const activeRings = avatarConfig?.filter(
+    (ring) => (ring.avatars?.length ?? 0) > 0,
+  );
+
+  const outerRing = activeRings?.reduce<RingConfig | undefined>(
+    (max, ring) =>
+      (ring.ringSize ?? 100) > (max ? (max.ringSize ?? 100) : 0) ? ring : max,
+    undefined,
+  );
 
   const containerSize = Math.max(
     124,
-    (outerRing?.ringSize ?? 0) + (outerRing?.avatarSize ?? 36)
-  )
+    (outerRing?.ringSize ?? 0) + (outerRing?.avatarSize ?? 32),
+  );
 
   return (
     <div
@@ -93,12 +95,15 @@ export const AvatarOrbit = (props: AvatarOrbitProps) => {
       }}
       className={cn(
         "group relative isolate flex flex-col items-center justify-center",
-        className
+        className,
       )}
       {...rest}
     >
-      <IllustrationsBackground background={background} />
-      {avatarConfig?.map((ring, index) => (
+      <IllustrationsBackground
+        background={background}
+        ringSize={outerRing ? (outerRing.ringSize ?? 100) : 0}
+      />
+      {activeRings?.map((ring, index) => (
         <Orbiting
           key={index}
           radius={(ring.ringSize ?? 100) / 2}
@@ -117,12 +122,12 @@ export const AvatarOrbit = (props: AvatarOrbitProps) => {
             <OrbitAvatar
               key={avatarIndex}
               item={avatar}
-              size={ring.avatarSize ?? 36}
+              size={ring.avatarSize ?? 32}
             />
           ))}
         </Orbiting>
       ))}
       {children}
     </div>
-  )
-}
+  );
+};

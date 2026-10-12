@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import type { CSSProperties } from "react"
-import { BlinkingParticles } from "./blink"
-import { motion } from "motion/react"
+import { motion } from "motion/react";
+
+import { BlinkingParticles } from "./blink";
 
 export type IllustrationBackground =
-  "ripple" | "gradient" | "particles" | "grid" | "none"
+  "ripple" | "gradient" | "particles" | "grid" | "none";
 
 export type BackgroundProps = {
-  background?: IllustrationBackground | IllustrationBackground[]
-  ringSize?: number
-}
+  background?: IllustrationBackground | IllustrationBackground[];
+  ringSize?: number;
+};
 
 export const IllustrationsBackground = ({
   background = "none",
   ringSize,
 }: BackgroundProps) => {
-  const backgrounds = Array.isArray(background) ? background : [background]
+  const backgrounds = Array.isArray(background) ? background : [background];
 
   return backgrounds.some((value) => value !== "none") ? (
     <div
@@ -81,5 +81,5 @@ export const IllustrationsBackground = ({
         </div>
       )}
     </div>
-  ) : null
-}
+  ) : null;
+};
