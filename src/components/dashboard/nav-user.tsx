@@ -6,7 +6,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/components/custom/tooltip";
 import { cn } from "cn";
 import { formatUserInitials } from "@/utils/formatter";
 import {
@@ -399,6 +399,8 @@ export function NavName({
           <TooltipContent
             side="bottom"
             align="start"
+            arrowAlign="start"
+            variant="popover"
             className="w-60 min-w-60 max-w-60 whitespace-normal break-words [overflow-wrap:anywhere]"
           >
             {user.name}
@@ -441,9 +443,12 @@ export function NavDropdownItem({
 }) {
   return (
     <>
-      <DropdownMenuItem className="" onClick={action}>
+      <DropdownMenuItem
+        onClick={action}
+        render={link ? <Link href={link} /> : undefined}
+      >
         <Icon className="size-4" />
-        {link ? <Link href={link}>{title}</Link> : <span>{title}</span>}
+        <span>{title}</span>
       </DropdownMenuItem>
     </>
   );
