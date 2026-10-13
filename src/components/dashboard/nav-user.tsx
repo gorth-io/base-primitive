@@ -143,8 +143,7 @@ export function NavUserDropdown({
       <DropdownMenuGroup>
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-            <NavAvatar user={user} />
-            <NavName user={user} />
+            <NavAccount user={user} />
           </div>
         </DropdownMenuLabel>
       </DropdownMenuGroup>
@@ -212,13 +211,7 @@ export function NavUser({
         <>
           <DropdownMenu>
             <DropdownMenuTrigger
-              render={
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="p-0"
-                />
-              }
+              render={<Button variant="ghost" size="icon" className="p-0" />}
             >
               <NavAvatar user={user} />
             </DropdownMenuTrigger>
@@ -249,8 +242,7 @@ export function NavUser({
                       />
                     }
                   >
-                    <NavAvatar user={user} />
-                    <NavName user={user} />
+                    <NavAccount user={user} />
                     <ChevronsUpDown className="ml-auto size-4" />
                   </DropdownMenuTrigger>
                 ) : size === "icon" ? (
@@ -265,8 +257,7 @@ export function NavUser({
                       />
                     }
                   >
-                    <NavAvatar user={user} />
-                    <NavName user={user} />
+                    <NavAccount user={user} />
                     <ChevronsUpDown className="ml-auto size-4" />
                   </DropdownMenuTrigger>
                 ) : (
@@ -294,6 +285,32 @@ export function NavUser({
   );
 }
 
+export interface NavAccountProps extends React.ComponentProps<"div"> {
+  user: UserProps;
+  showName?: boolean;
+}
+
+export function NavAccount({
+  user,
+  showName = true,
+  className,
+  ...props
+}: NavAccountProps) {
+  return (
+    <div
+      className={cn(
+        "flex min-w-0 items-center gap-2",
+        showName && "flex-1",
+        className,
+      )}
+      {...props}
+    >
+      <NavAvatar user={user} />
+      {showName ? <NavName user={user} /> : null}
+    </div>
+  );
+}
+
 export function NavAvatar({ user }: { user: UserProps }) {
   const initials = formatUserInitials(user.name);
 
@@ -313,7 +330,7 @@ export function NavAvatar({ user }: { user: UserProps }) {
 export function NavName({ user }: { user: UserProps }) {
   return (
     <>
-      <div className="grid flex-1 text-left text-sm leading-tight">
+      <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
         <span className="truncate font-medium" suppressHydrationWarning>
           {user.name}
         </span>
