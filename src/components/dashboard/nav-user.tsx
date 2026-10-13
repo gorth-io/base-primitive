@@ -2,6 +2,11 @@
 
 import React, { JSX } from "react";
 import Link from "next/link";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "cn";
 import { formatUserInitials } from "@/utils/formatter";
 import {
@@ -257,9 +262,24 @@ export function NavUser({
   );
 }
 
-export interface NavIdentityProps extends React.ComponentProps<"div"> {
-  user: UserProps;
+export interface NavIdentityUser {
+  name: string;
+  avatar?: string | null;
+  email?: string;
+}
+
+export interface NavIdentityProps extends Omit<
+  React.ComponentProps<"div">,
+  "className" | "style" | "children"
+> {
+  user: NavIdentityUser;
   showName?: boolean;
+  description?: React.ReactNode;
+  url?: string;
+  href?: string;
+  hover?: boolean;
+  tooltip?: boolean;
+  trailing?: React.ReactNode;
 }
 
 export interface NavAccountProps extends React.ComponentProps<
@@ -294,29 +314,49 @@ export function NavAccount({
 export function NavIdentity({
   user,
   showName = true,
-  className,
+  description,
+  url,
+  href,
+  hover = false,
+  tooltip = false,
+  trailing,
   ...props
 }: NavIdentityProps) {
   return (
     <div
-      className={cn(
-        "flex min-w-0 items-center gap-2",
-        showName && "flex-1",
-        className,
-      )}
       {...props}
+      className={cn("flex min-w-0 items-center gap-2", showName && "flex-1")}
     >
-      <NavAvatar user={user} />
-      {showName ? <NavName user={user} /> : null}
+      <NavAvatar user={user} url={url} />
+      {showName ? (
+        <NavName
+          user={user}
+          description={description}
+          hover={hover}
+          tooltip={tooltip}
+          url={url}
+          href={href}
+        />
+      ) : null}
+      {trailing}
     </div>
   );
 }
 
-export function NavAvatar({ user }: { user: UserProps }) {
-  const initials = formatUserInitials(user.name);
+export interface NavAvatarProps {
+  user: NavIdentityUser;
+  url?: string;
+}
 
-  return (
-    <Avatar>
+export function NavAvatar({ user, url }: NavAvatarProps) {
+  const initials = formatUserInitials(user.name);
+  const avatar = (
+    <Avatar
+      className={cn(
+        "size-9 shrink-0",
+        url ? "cursor-pointer" : "cursor-default",
+      )}
+    >
       <AvatarImage src={user.avatar || undefined} alt={user.name} />
       <AvatarFallback
         className="bg-muted-foreground text-primary-foreground"
@@ -326,20 +366,81 @@ export function NavAvatar({ user }: { user: UserProps }) {
       </AvatarFallback>
     </Avatar>
   );
+  return url ? (
+    <Link href={url} aria-label={user.name} className="shrink-0 cursor-pointer">
+      {avatar}
+    </Link>
+  ) : (
+    avatar
+  );
 }
 
-export function NavName({ user }: { user: UserProps }) {
+export interface NavNameProps {
+  user: NavIdentityUser;
+  description?: React.ReactNode;
+  url?: string;
+  href?: string;
+  hover?: boolean;
+  tooltip?: boolean;
+}
+
+export function NavName({
+  user,
+  description = user.email,
+  url,
+  href,
+  hover = false,
+  tooltip = false,
+}: NavNameProps) {
+  const nameUrl = href ?? url;
+  const nameClass = "block min-w-0 truncate font-medium";
+  const name = nameUrl ? (
+    <Link href={nameUrl} className={nameClass} suppressHydrationWarning>
+      {user.name}
+    </Link>
+  ) : (
+    <span className={nameClass} suppressHydrationWarning>
+      {user.name}
+    </span>
+  );
+  const descriptionClass = cn(
+    "block min-w-0 truncate text-xs",
+    hover && "text-muted-foreground transition-colors hover:text-foreground",
+  );
   return (
-    <>
-      <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
-        <span className="truncate font-medium" suppressHydrationWarning>
-          {user.name}
-        </span>
-        <span className="truncate text-xs" suppressHydrationWarning>
-          {user.email}
-        </span>
-      </div>
-    </>
+    <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
+      {tooltip ? (
+        <Tooltip>
+          <TooltipTrigger nativeButton={false} render={name} tabIndex={0} />
+          <TooltipContent
+            side="bottom"
+            align="start"
+            className="w-60 min-w-60 max-w-60 whitespace-normal break-words [overflow-wrap:anywhere]"
+          >
+            {user.name}
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        name
+      )}
+      {description !== null &&
+      description !== false &&
+      description !== undefined ? (
+        url ? (
+          <Link
+            href={url}
+            className={descriptionClass}
+            suppressHydrationWarning
+          >
+            {description}
+          </Link>
+        ) : (
+          <span className={descriptionClass} suppressHydrationWarning>
+            {description}
+          </span>
+        )
+      ) : null}
+    </div>
   );
 }
 
