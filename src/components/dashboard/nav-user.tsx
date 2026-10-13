@@ -53,7 +53,6 @@ import type {
 
 export function NavUserX({ user }: { user: UserProps }) {
   const { isMobile } = useSidebar();
-  const initials = formatUserInitials(user.name);
 
   return (
     <SidebarMenu>
@@ -67,14 +66,7 @@ export function NavUserX({ user }: { user: UserProps }) {
               />
             }
           >
-            <Avatar className="">
-              <AvatarImage src={user.avatar || undefined} alt={user.name} />
-              <AvatarFallback className="rounded-md">{initials}</AvatarFallback>
-            </Avatar>
-            <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium">{user.name}</span>
-              <span className="truncate text-xs">{user.email}</span>
-            </div>
+            <NavIdentity user={user} />
             <EllipsisVertical className="ml-auto size-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -86,17 +78,7 @@ export function NavUserX({ user }: { user: UserProps }) {
             <DropdownMenuGroup>
               <DropdownMenuLabel className="p-0 font-normal">
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar className="">
-                    <AvatarImage
-                      src={user.avatar || undefined}
-                      alt={user.name}
-                    />
-                    <AvatarFallback className="">{initials}</AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name}</span>
-                    <span className="truncate text-xs">{user.email}</span>
-                  </div>
+                  <NavIdentity user={user} />
                 </div>
               </DropdownMenuLabel>
             </DropdownMenuGroup>
@@ -273,6 +255,7 @@ export interface NavIdentityProps extends Omit<
   "className" | "style" | "children"
 > {
   user: NavIdentityUser;
+  showAvatar?: boolean;
   showName?: boolean;
   description?: React.ReactNode;
   url?: string;
@@ -313,6 +296,7 @@ export function NavAccount({
 
 export function NavIdentity({
   user,
+  showAvatar = true,
   showName = true,
   description,
   url,
@@ -327,7 +311,7 @@ export function NavIdentity({
       {...props}
       className={cn("flex min-w-0 items-center gap-2", showName && "flex-1")}
     >
-      <NavAvatar user={user} url={url} />
+      {showAvatar ? <NavAvatar user={user} url={url} /> : null}
       {showName ? (
         <NavName
           user={user}
@@ -411,7 +395,7 @@ export function NavName({
     <div className="grid min-w-0 flex-1 text-left text-sm leading-tight">
       {tooltip ? (
         <Tooltip>
-          <TooltipTrigger nativeButton={false} render={name} tabIndex={0} />
+          <TooltipTrigger render={name} tabIndex={0} />
           <TooltipContent
             side="bottom"
             align="start"
