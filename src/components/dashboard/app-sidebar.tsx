@@ -29,7 +29,7 @@ export function AppSidebar({ data, auth, ...props }: AppSidebarProps) {
 
   return (
     <Sidebar collapsible={collapsible} variant={variant} {...props}>
-    {/*<Sidebar variant="inset" {...props}>*/}
+      {/*<Sidebar variant="inset" {...props}>*/}
       <SidebarHeader>
         {data.teams?.length ? (
           <TeamSwitcher teams={data.teams} />
@@ -75,7 +75,7 @@ export function AppSidebar({ data, auth, ...props }: AppSidebarProps) {
           </SidebarMenu>
         )}
       </SidebarHeader>
-      {/*<SidebarSeparator className="mx-0" />*/}
+      <SidebarSeparator className="mx-0" />
       <SidebarContent>
         <NavMaster items={data.navMain} />
         <SidebarSeparator className="mx-0 -my-2" />
@@ -83,7 +83,7 @@ export function AppSidebar({ data, auth, ...props }: AppSidebarProps) {
         <SidebarSeparator className="mx-0 -my-2" />
         <NavProjects projects={data.projects} className="mt-auto" />
       </SidebarContent>
-      {/*<SidebarSeparator className="mx-0" />*/}
+      <SidebarSeparator className="mx-0" />
       <SidebarFooter>
         <NavUser
           user={data.user}

@@ -28,7 +28,7 @@ import { Button } from "@/components/custom/button";
 import {
   BadgeCheck,
   Bell,
-  ChevronsUpDown,
+  EllipsisVertical,
   CreditCard,
   LogOut,
   Sparkles,
@@ -70,7 +70,7 @@ export function NavUserX({ user }: { user: UserProps }) {
               <span className="truncate font-medium">{user.name}</span>
               <span className="truncate text-xs">{user.email}</span>
             </div>
-            <ChevronsUpDown className="ml-auto size-4" />
+            <EllipsisVertical className="ml-auto size-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
@@ -141,41 +141,33 @@ export function NavUserDropdown({
   return (
     <>
       <DropdownMenuGroup>
-        <DropdownMenuLabel className="p-0 font-normal">
-          <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-            <NavAccount user={user} />
-          </div>
-        </DropdownMenuLabel>
+        <NavAccount user={user} />
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-
-      {auth.authenticated ? (
-        <>
-          <DropdownMenuGroup>
-            {nav.main.map((item) => (
+      <DropdownMenuGroup>
+        {auth.authenticated
+          ? nav.main.map((item) => (
               <NavDropdownItem
                 key={item.url}
                 icon={item.icon}
                 title={item.title}
                 link={item.url}
               />
-            ))}
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <NavDropdownItem
-              icon={LogOut}
-              title="Sign out"
-              action={auth.logout}
-            />
-          </DropdownMenuGroup>
-        </>
-      ) : (
-        <DropdownMenuGroup>
-          {nav.secondary.map((item) => {
+            ))
+          : null}
+      </DropdownMenuGroup>
+      <DropdownMenuSeparator />
+      <DropdownMenuGroup>
+        {auth.authenticated ? (
+          <NavDropdownItem
+            icon={LogOut}
+            title="Sign out"
+            action={auth.logout}
+          />
+        ) : (
+          nav.secondary.map((item) => {
             const isSignIn = item.url.endsWith("/sign-in");
             const isSignUp = item.url.endsWith("/sign-up");
-
             return (
               <NavDropdownItem
                 key={item.url}
@@ -187,9 +179,9 @@ export function NavUserDropdown({
                 link={!isSignIn && !isSignUp ? item.url : undefined}
               />
             );
-          })}
-        </DropdownMenuGroup>
-      )}
+          })
+        )}
+      </DropdownMenuGroup>
     </>
   );
 }
@@ -230,41 +222,21 @@ export function NavUser({
           <SidebarMenu>
             <SidebarMenuItem>
               <DropdownMenu>
-                {size === "lg" ? (
-                  <DropdownMenuTrigger
-                    render={
-                      <SidebarMenuButton
-                        size="lg"
-                        className={cn(
-                          "data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground",
-                          "h-14", // "data-[active=true]:bg-professional-main/24"
-                        )}
-                      />
-                    }
-                  >
-                    <NavAccount user={user} />
-                    <ChevronsUpDown className="ml-auto size-4" />
-                  </DropdownMenuTrigger>
-                ) : size === "icon" ? (
-                  <DropdownMenuTrigger
-                    render={
-                      <SidebarMenuButton
-                        size="default"
-                        className={cn(
-                          "data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground",
-                          "md:p-0 group-data-[collapsible=icon]:p-0!",
-                        )}
-                      />
-                    }
-                  >
-                    <NavAccount user={user} />
-                    <ChevronsUpDown className="ml-auto size-4" />
-                  </DropdownMenuTrigger>
-                ) : (
-                  <DropdownMenuTrigger
-                    render={<SidebarMenuButton size="default" />}
-                  ></DropdownMenuTrigger>
-                )}
+                <DropdownMenuTrigger
+                  render={
+                    <NavAccount
+                      user={user}
+                      className={
+                        size === "icon"
+                          ? "group-data-[collapsible=icon]:p-0!"
+                          : undefined
+                      }
+                      trailing={
+                        <EllipsisVertical className="ml-auto size-4 shrink-0" />
+                      }
+                    />
+                  }
+                />
                 <DropdownMenuContent
                   className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
                   // side={isMobile ? "bottom" : "right"}
@@ -285,17 +257,46 @@ export function NavUser({
   );
 }
 
-export interface NavAccountProps extends React.ComponentProps<"div"> {
+export interface NavIdentityProps extends React.ComponentProps<"div"> {
   user: UserProps;
   showName?: boolean;
 }
 
+export interface NavAccountProps extends React.ComponentProps<
+  typeof SidebarMenuButton
+> {
+  user: UserProps;
+  trailing?: React.ReactNode;
+}
+
 export function NavAccount({
+  user,
+  trailing,
+  className,
+  ...props
+}: NavAccountProps) {
+  return (
+    <SidebarMenuButton
+      {...props}
+      size="lg"
+      className={cn(
+        "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        className,
+        "h-14 w-full gap-2 focus:bg-sidebar-accent focus:text-sidebar-accent-foreground not-data-[variant=destructive]:focus:**:text-sidebar-accent-foreground",
+      )}
+    >
+      <NavIdentity user={user} />
+      {trailing}
+    </SidebarMenuButton>
+  );
+}
+
+export function NavIdentity({
   user,
   showName = true,
   className,
   ...props
-}: NavAccountProps) {
+}: NavIdentityProps) {
   return (
     <div
       className={cn(

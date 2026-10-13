@@ -14,6 +14,7 @@ import {
   LogOut,
 } from "lucide-react";
 import {
+  NavIdentity,
   NavAccount,
   NavDropdownItem,
   NavUser as PrimitiveNavUser,
@@ -24,13 +25,11 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/custom/dropdown";
 import {
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/custom/sidebar";
@@ -43,15 +42,7 @@ export interface AccountSwitcherProps
 }
 
 export function AccountSwitcher(props: AccountSwitcherProps) {
-  const {
-    user,
-    nav,
-    auth,
-    type,
-    size = "icon",
-    side = "bottom",
-    align = "end",
-  } = props;
+  const { user, nav, auth, type, side = "bottom", align = "end" } = props;
   const { isMobile } = useSidebar();
   const {
     open,
@@ -67,6 +58,16 @@ export function AccountSwitcher(props: AccountSwitcherProps) {
     maxAccounts,
   } = props;
   const reduceMotion = useReducedMotion();
+  const [panelElement, setPanelElement] = useState<HTMLDivElement | null>(null);
+  const [panelHeight, setPanelHeight] = useState<number | undefined>();
+  useEffect(() => {
+    if (!panelElement) return;
+    const measure = () => setPanelHeight(panelElement.offsetHeight);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(panelElement);
+    return () => observer.disconnect();
+  }, [panelElement]);
   const [view, setView] = useState<"profile" | "accounts">("profile");
   useEffect(() => {
     if (!open) setView("profile");
@@ -92,62 +93,68 @@ export function AccountSwitcher(props: AccountSwitcherProps) {
         aria-label={`Account menu for ${user.name}`}
         render={
           type === "navbar" ? (
-            <Button variant="ghost" size="icon" className="p-0" />
+            <Button variant="ghost" size="icon" className="p-0">
+              <NavIdentity user={user} showName={false} />
+            </Button>
           ) : (
-            <SidebarMenuButton
-              size={size === "lg" ? "lg" : "default"}
-              className={
-                size === "lg"
-                  ? "h-14 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                  : "group-data-[collapsible=icon]:p-0! data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:p-0"
+            <NavAccount
+              user={user}
+              trailing={
+                <EllipsisVertical className="ml-auto size-4 shrink-0" />
               }
             />
           )
         }
-      >
-        <NavAccount user={user} showName={type === "sidebar"} />
-        {type === "sidebar" ? (
-          <>
-            <EllipsisVertical className="ml-auto size-4 shrink-0" />
-          </>
-        ) : null}
-      </DropdownMenuTrigger>
+      />
       <DropdownMenuContent
-        className="w-[248px] min-w-[248px] rounded-lg duration-200"
+        tabIndex={-1}
+        className="w-[248px] min-w-[248px] rounded-lg overflow-y-hidden"
         side={type === "navbar" || isMobile ? "bottom" : side}
         align={align}
         sideOffset={4}
       >
         <motion.div
-          layout
-          className="relative overflow-hidden"
-          transition={{ duration: reduceMotion ? 0 : 0.2 }}
+          className="-m-1 overflow-hidden"
+          animate={
+            panelHeight === undefined ? undefined : { height: panelHeight }
+          }
+          transition={{
+            duration: reduceMotion ? 0 : 0.2,
+            ease: [0.22, 1, 0.36, 1],
+          }}
         >
-          <AnimatePresence initial={false} mode="popLayout">
+          <AnimatePresence initial={false} mode="wait">
             <motion.div
               key={view}
+              className="p-1"
+              ref={setPanelElement}
               initial={{
                 opacity: 0,
-                x: reduceMotion ? 0 : view === "accounts" ? 24 : -24,
+                x: reduceMotion ? 0 : view === "accounts" ? 8 : -8,
               }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{
-                opacity: 0,
-                x: reduceMotion ? 0 : view === "accounts" ? 24 : -24,
-              }}
-              transition={{ duration: reduceMotion ? 0 : 0.18 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.12 }}
             >
               {view === "accounts" ? (
                 <>
-                  <DropdownMenuItem
-                    className="h-9 w-[240px]"
-                    closeOnClick={false}
-                    disabled={busy}
-                    onClick={() => setView("profile")}
-                  >
-                    <ArrowLeft className="size-4" />
-                    Back
-                  </DropdownMenuItem>
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem
+                      closeOnClick={false}
+                      disabled={busy}
+                      onClick={(event) => {
+                        event.currentTarget
+                          .closest<HTMLElement>(
+                            '[data-slot="dropdown-menu-content"]',
+                          )
+                          ?.focus();
+                        setView("profile");
+                      }}
+                    >
+                      <ArrowLeft className="size-4" /> Back
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
                   <AccountSwitcherItems
                     accounts={accounts}
                     loading={loading}
@@ -161,21 +168,34 @@ export function AccountSwitcher(props: AccountSwitcherProps) {
                 </>
               ) : (
                 <>
-                  <DropdownMenuItem
-                    className="h-14 w-full rounded-md bg-muted/50"
-                    closeOnClick={false}
-                    disabled={busy}
-                    onClick={() => {
-                      onRetry();
-                      setView("accounts");
-                    }}
-                  >
-                    <NavAccount user={user} />
-                    <RotateCw
-                      className="ml-auto size-4 shrink-0"
-                      aria-label="Switch account"
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem
+                      closeOnClick={false}
+                      disabled={busy}
+                      nativeButton
+                      render={(itemProps) => (
+                        <NavAccount
+                          {...itemProps}
+                          user={user}
+                          trailing={
+                            <RotateCw
+                              className="ml-auto size-4 shrink-0"
+                              aria-label="Switch account"
+                            />
+                          }
+                        />
+                      )}
+                      onClick={(event) => {
+                        event.currentTarget
+                          .closest<HTMLElement>(
+                            '[data-slot="dropdown-menu-content"]',
+                          )
+                          ?.focus();
+                        onRetry();
+                        setView("accounts");
+                      }}
                     />
-                  </DropdownMenuItem>
+                  </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     {nav.main.map((item) => (
@@ -188,11 +208,13 @@ export function AccountSwitcher(props: AccountSwitcherProps) {
                     ))}
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <NavDropdownItem
-                    icon={LogOut}
-                    title="Sign out"
-                    action={auth.logout}
-                  />
+                  <DropdownMenuGroup>
+                    <NavDropdownItem
+                      icon={LogOut}
+                      title="Sign out"
+                      action={auth.logout}
+                    />
+                  </DropdownMenuGroup>
                 </>
               )}
             </motion.div>
@@ -242,8 +264,10 @@ export function AccountSwitcherItems({
 
   return (
     <>
-      <DropdownMenuGroup aria-busy={loading || busy}>
-        <DropdownMenuLabel>Accounts on this browser</DropdownMenuLabel>
+      <DropdownMenuGroup
+        aria-busy={loading || busy}
+        className="max-h-[calc(var(--available-height)-9rem)] overflow-y-auto overscroll-contain"
+      >
         {loading ? (
           <p
             role="status"
@@ -265,37 +289,39 @@ export function AccountSwitcherItems({
           <DropdownMenuItem
             key={account.sessionId}
             nativeButton
-            render={(props) => (
-              <SidebarMenuButton
-                {...props}
-                type="button"
-                size="lg"
-                className="h-14 w-60 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            render={(itemProps) => (
+              <NavAccount
+                {...itemProps}
+                user={{
+                  name: account.user.name,
+                  email: account.user.email,
+                  avatar: account.user.image ?? "",
+                }}
+                trailing={
+                  pendingSessionId === account.sessionId ? (
+                    <Loader2
+                      className="ml-auto size-4 animate-spin"
+                      aria-label="Switching account"
+                    />
+                  ) : account.active ? (
+                    <Check
+                      className="ml-auto size-4"
+                      aria-label="Active account"
+                    />
+                  ) : (
+                    <span
+                      className="ml-auto size-4 shrink-0"
+                      aria-hidden="true"
+                    />
+                  )
+                }
               />
             )}
             disabled={loading || busy}
             closeOnClick={false}
             aria-label={`${account.user.name}, ${account.user.email}${account.active ? ", active account" : ""}`}
             onClick={() => onSelect(account)}
-          >
-            <NavAccount
-              user={{
-                name: account.user.name,
-                email: account.user.email,
-                avatar: account.user.image ?? "",
-              }}
-            />
-            {pendingSessionId === account.sessionId ? (
-              <Loader2
-                className="ml-auto size-4 animate-spin"
-                aria-label="Switching account"
-              />
-            ) : account.active ? (
-              <Check className="ml-auto size-4" aria-label="Active account" />
-            ) : (
-              <span className="ml-auto size-4 shrink-0" aria-hidden="true" />
-            )}
-          </DropdownMenuItem>
+          />
         ))}
         {error ? (
           <>
@@ -315,20 +341,22 @@ export function AccountSwitcherItems({
         ) : null}
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      {accounts.length >= maxAccounts ? (
-        <p className="px-2.5 py-2 text-xs text-muted-foreground">
-          Sign out of an account before adding another. Up to {maxAccounts}{" "}
-          accounts are supported.
-        </p>
-      ) : null}
-      <DropdownMenuItem
-        className="h-9 w-60"
-        disabled={loading || busy || accounts.length >= maxAccounts}
-        render={<Link href={addAccountHref} />}
-      >
-        <UserPlus className="size-4" />
-        Add account
-      </DropdownMenuItem>
+      <DropdownMenuGroup>
+        {accounts.length >= maxAccounts ? (
+          <p className="px-2.5 py-2 text-xs text-muted-foreground">
+            Sign out of an account before adding another. Up to {maxAccounts}{" "}
+            accounts are supported.
+          </p>
+        ) : null}
+        <DropdownMenuItem
+          className="h-9 w-full"
+          disabled={loading || busy || accounts.length >= maxAccounts}
+          render={<Link href={addAccountHref} />}
+        >
+          <UserPlus className="size-4" />
+          Add account
+        </DropdownMenuItem>
+      </DropdownMenuGroup>
     </>
   );
 }
