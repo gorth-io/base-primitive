@@ -9,6 +9,7 @@ import { NavMaster } from "@/components/dashboard/nav-main"
 import { NavProjects } from "@/components/dashboard/nav-projects"
 import { NavSecondary } from "@/components/dashboard/nav-secondary"
 import { NavUser } from "@/components/dashboard/nav-user"
+import { AccountSwitcher, type AccountSwitcherProps } from "@/components/dashboard/account-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -24,7 +25,14 @@ import { TeamSwitcher } from "@/components/dashboard/team-switcher"
 import { AppSidebarProps } from "@/utils/interface";
 import { useLayout } from "@/providers/layout"
 
-export function AppSidebar({ data, auth, ...props }: AppSidebarProps) {
+export interface AppSidebarAccountSwitcherProps extends Omit<
+  AccountSwitcherProps,
+  "user" | "nav" | "auth" | "type" | "side" | "size" | "align"
+> {}
+
+export function AppSidebar({ data, auth, accountSwitcher, ...props }: AppSidebarProps & {
+  accountSwitcher?: AppSidebarAccountSwitcherProps
+}) {
   const { collapsible, variant } = useLayout()
 
   return (
@@ -51,11 +59,11 @@ export function AppSidebar({ data, auth, ...props }: AppSidebarProps) {
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       {data.brand.plan ? (
                         <>
-                          <span className="truncate font-medium">{data.brand.name}</span>
+                          <span className="truncate text-2xl font-bold tracking-tight text-foreground">{data.brand.name}</span>
                           <span className="truncate text-xs">{data.brand.plan}</span>
                         </>
                       ) : (
-                        <span className="truncate font-medium text-xl">{data.brand.name}</span>
+                        <span className="truncate text-2xl font-bold tracking-tight text-foreground">{data.brand.name}</span>
                       )}
                     </div>
                   </>
@@ -65,7 +73,7 @@ export function AppSidebar({ data, auth, ...props }: AppSidebarProps) {
                       <Command className="size-4" />
                     </div>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-medium">Gorth Inc</span>
+                      <span className="truncate text-2xl font-bold tracking-tight text-foreground">Gorth Inc</span>
                       <span className="truncate text-xs">Enterprise</span>
                     </div>
                   </>
@@ -85,6 +93,17 @@ export function AppSidebar({ data, auth, ...props }: AppSidebarProps) {
       </SidebarContent>
       <SidebarSeparator className="mx-0" />
       <SidebarFooter>
+        {accountSwitcher ? (
+          <AccountSwitcher
+            {...accountSwitcher}
+            user={data.user}
+            type="sidebar"
+            side="right"
+            size="lg"
+            auth={auth}
+            nav={{ main: data.navDropdown, secondary: data.navSignal }}
+          />
+        ) : (
         <NavUser
           user={data.user}
           type="sidebar"
@@ -96,6 +115,7 @@ export function AppSidebar({ data, auth, ...props }: AppSidebarProps) {
             secondary: data.navSignal
           }}
         />
+        )}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
