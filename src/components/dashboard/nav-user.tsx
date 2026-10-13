@@ -244,17 +244,11 @@ export function NavUser({
   );
 }
 
-export interface NavIdentityUser {
-  name: string;
-  avatar?: string | null;
-  email?: string;
-}
-
 export interface NavIdentityProps extends Omit<
   React.ComponentProps<"div">,
   "className" | "style" | "children"
 > {
-  user: NavIdentityUser;
+  user: UserProps;
   showAvatar?: boolean;
   showName?: boolean;
   description?: React.ReactNode;
@@ -263,6 +257,21 @@ export interface NavIdentityProps extends Omit<
   hover?: boolean;
   tooltip?: boolean;
   trailing?: React.ReactNode;
+}
+
+export interface NavProfileProps extends Omit<React.ComponentProps<typeof Avatar>, "children"> {
+  user: UserProps;
+}
+
+export function NavProfile({ user, className, ...props }: NavProfileProps) {
+  return (
+    <Avatar {...props} className={cn("size-24 rounded-2xl", className)}>
+      <AvatarImage alt={user.name} className="rounded-2xl object-cover" src={user.avatar || undefined} />
+      <AvatarFallback className="rounded-2xl text-2xl">
+        {formatUserInitials(user.name || user.email || "User")}
+      </AvatarFallback>
+    </Avatar>
+  );
 }
 
 export interface NavAccountProps extends React.ComponentProps<
@@ -328,7 +337,7 @@ export function NavIdentity({
 }
 
 export interface NavAvatarProps {
-  user: NavIdentityUser;
+  user: UserProps;
   url?: string;
 }
 
@@ -360,7 +369,7 @@ export function NavAvatar({ user, url }: NavAvatarProps) {
 }
 
 export interface NavNameProps {
-  user: NavIdentityUser;
+  user: UserProps;
   description?: React.ReactNode;
   url?: string;
   href?: string;

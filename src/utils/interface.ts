@@ -58,11 +58,8 @@ export interface NavMessage {
 
 export interface UserProps {
   name: string;
-  email: string;
-  avatar: string;
-  // name?: string | null;
-  // email?: string | null;
-  // avatar?: string | null;
+  email?: string;
+  avatar?: string | null;
 }
 
 export interface AppSidebarUserProps {
