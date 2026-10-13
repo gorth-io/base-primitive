@@ -3,10 +3,10 @@
 import Link from "next/link";
 
 import { useEffect, useState, type ComponentProps } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowLeft,
   EllipsisVertical,
+  ChevronRight,
   RotateCw,
   Check,
   Loader2,
@@ -57,17 +57,6 @@ export function AccountSwitcher(props: AccountSwitcherProps) {
     addAccountHref,
     maxAccounts,
   } = props;
-  const reduceMotion = useReducedMotion();
-  const [panelElement, setPanelElement] = useState<HTMLDivElement | null>(null);
-  const [panelHeight, setPanelHeight] = useState<number | undefined>();
-  useEffect(() => {
-    if (!panelElement) return;
-    const measure = () => setPanelHeight(panelElement.offsetHeight);
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(panelElement);
-    return () => observer.disconnect();
-  }, [panelElement]);
   const [view, setView] = useState<"profile" | "accounts">("profile");
   useEffect(() => {
     if (!open) setView("profile");
@@ -108,118 +97,88 @@ export function AccountSwitcher(props: AccountSwitcherProps) {
       />
       <DropdownMenuContent
         tabIndex={-1}
-        className="w-[248px] min-w-[248px] rounded-lg overflow-y-hidden"
+        className="w-[248px] min-w-[248px] rounded-lg"
         side={type === "navbar" || isMobile ? "bottom" : side}
         align={align}
         sideOffset={4}
       >
-        <motion.div
-          className="-m-1 overflow-hidden"
-          animate={
-            panelHeight === undefined ? undefined : { height: panelHeight }
-          }
-          transition={{
-            duration: reduceMotion ? 0 : 0.2,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          <AnimatePresence initial={false} mode="wait">
-            <motion.div
-              key={view}
-              className="p-1"
-              ref={setPanelElement}
-              initial={{
-                opacity: 0,
-                x: reduceMotion ? 0 : view === "accounts" ? 8 : -8,
-              }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: reduceMotion ? 0 : 0.12 }}
-            >
-              {view === "accounts" ? (
-                <>
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      closeOnClick={false}
-                      disabled={busy}
-                      onClick={(event) => {
-                        event.currentTarget
-                          .closest<HTMLElement>(
-                            '[data-slot="dropdown-menu-content"]',
-                          )
-                          ?.focus();
-                        setView("profile");
-                      }}
-                    >
-                      <ArrowLeft className="size-4" /> Back
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <AccountSwitcherItems
-                    accounts={accounts}
-                    loading={loading}
-                    pendingSessionId={pendingSessionId}
-                    error={error}
-                    onSelect={onSelect}
-                    onRetry={onRetry}
-                    addAccountHref={addAccountHref}
-                    maxAccounts={maxAccounts}
-                  />
-                </>
-              ) : (
-                <>
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem
-                      closeOnClick={false}
-                      disabled={busy}
-                      nativeButton
-                      render={(itemProps) => (
-                        <NavAccount
-                          {...itemProps}
-                          user={user}
-                          trailing={
-                            <RotateCw
-                              className="ml-auto size-4 shrink-0"
-                              aria-label="Switch account"
-                            />
-                          }
-                        />
-                      )}
-                      onClick={(event) => {
-                        event.currentTarget
-                          .closest<HTMLElement>(
-                            '[data-slot="dropdown-menu-content"]',
-                          )
-                          ?.focus();
-                        onRetry();
-                        setView("accounts");
-                      }}
-                    />
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    {nav.main.map((item) => (
-                      <NavDropdownItem
-                        key={item.url}
-                        icon={item.icon}
-                        title={item.title}
-                        link={item.url}
+        {view === "accounts" ? (
+          <>
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                closeOnClick={false}
+                disabled={busy}
+                onClick={(event) => {
+                  event.currentTarget
+                    .closest<HTMLElement>('[data-slot="dropdown-menu-content"]')
+                    ?.focus();
+                  setView("profile");
+                }}
+              >
+                <ArrowLeft className="size-4" /> Back
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <AccountSwitcherItems
+              accounts={accounts}
+              loading={loading}
+              pendingSessionId={pendingSessionId}
+              error={error}
+              onSelect={onSelect}
+              onRetry={onRetry}
+              addAccountHref={addAccountHref}
+              maxAccounts={maxAccounts}
+            />
+          </>
+        ) : (
+          <>
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                closeOnClick={false}
+                disabled={busy}
+                nativeButton
+                render={(itemProps) => (
+                  <NavAccount
+                    {...itemProps}
+                    user={user}
+                    trailing={
+                      <ChevronRight
+                        className="ml-auto size-4 shrink-0"
+                        aria-label="Switch account"
                       />
-                    ))}
-                  </DropdownMenuGroup>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <NavDropdownItem
-                      icon={LogOut}
-                      title="Sign out"
-                      action={auth.logout}
-                    />
-                  </DropdownMenuGroup>
-                </>
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
+                    }
+                  />
+                )}
+                onClick={(event) => {
+                  event.currentTarget
+                    .closest<HTMLElement>('[data-slot="dropdown-menu-content"]')
+                    ?.focus();
+                  onRetry();
+                  setView("accounts");
+                }}
+              />
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              {nav.main.map((item) => (
+                <NavDropdownItem
+                  key={item.url}
+                  icon={item.icon}
+                  title={item.title}
+                  link={item.url}
+                />
+              ))}
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <NavDropdownItem
+                icon={LogOut}
+                title="Sign out"
+                action={auth.logout}
+              />
+            </DropdownMenuGroup>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
