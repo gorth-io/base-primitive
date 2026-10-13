@@ -66,6 +66,7 @@
 
   --color-professional-secondary: var(--professional-secondary);
   --color-professional-success: var(--professional-success);
+  --color-professional-error: var(--professional-danger);
   --color-professional-info: var(--professional-info);
   --color-professional-warning: var(--professional-warning);
   --color-professional-danger: var(--professional-danger);

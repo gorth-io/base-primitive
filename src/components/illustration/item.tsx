@@ -13,7 +13,7 @@ export type AvatarItem = NavSubItem;
 export function OrbitAvatar({
   item,
   size = 54,
-  iconSize = 54,
+  iconSize = 36,
 }: {
   item: NavSubItem;
   size?: number;
