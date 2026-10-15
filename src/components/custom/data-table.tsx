@@ -71,6 +71,7 @@ import {
 import { Button } from "@/components/custom/button";
 import { Badge } from "@/components/custom/badge";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsList, TabsTrigger } from "@/components/custom/tabs";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/utils/cn";
@@ -86,7 +87,6 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Settings2,
-  Check,
   RotateCw,
   Plus,
   PlusCircle,
@@ -914,16 +914,13 @@ export function DataTableFacetedFilterAll<TData extends RowData, TValue>({
                       );
                     }}
                   >
-                    <div
-                      className={cn(
-                        "flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                        isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible",
-                      )}
-                    >
-                      <Check className={cn("h-4 w-4")} />
-                    </div>
+                    <Checkbox
+                      checked={isSelected}
+                      readOnly
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      className="pointer-events-none"
+                    />
                     {option.icon && (
                       <option.icon className="h-4 w-4 text-muted-foreground" />
                     )}
@@ -1033,17 +1030,15 @@ export function DataTableFacetedFilter({
 
                       onValueChange(Array.from(nextValues));
                     }}
+                    className="p-2.5 gap-2.5"
                   >
-                    <div
-                      className={cn(
-                        "flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                        isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : "opacity-50 [&_svg]:invisible",
-                      )}
-                    >
-                      <Check />
-                    </div>
+                    <Checkbox
+                      checked={isSelected}
+                      readOnly
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      className="pointer-events-none"
+                    />
                     {option.icon && (
                       <option.icon className="text-muted-foreground" />
                     )}
