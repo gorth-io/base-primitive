@@ -6,3 +6,4 @@ export * from "@/components/element/mode-toggle";
 export * from "@/components/element/notify";
 export * from "@/components/element/search-bar";
 export * from "@/components/element/utility";
+export * from "@/components/element/stats-box";

@@ -179,12 +179,24 @@ export interface FooterProps {
 // SIDEBAR INTERFACES
 // ============================================================================
 
-export interface StatsBoxProps {
-  title: string;
-  description: string;
-  icon: LucideIcon;
-  color?: string;
-  stats: string | number;
+export interface StatsBoxProps extends Pick<
+  NavSubItem,
+  "title" | "description" | "icon"
+> {
+  /** Main display value, already formatted by the caller (currency, percent, etc.). */
+  number: string | number;
+  /** Direction of change, independent of whether that change is desirable. */
+  isActive?: -1 | 0 | 1;
+  /** Displayed change, e.g. "+12%", "-$4.20" or 0; direction alone shows an icon. */
+  change?: string | number;
+  /** Previous value; description supplies its comparison period/context. */
+  previous?: string | number;
+  /** For costs/returns, increases are negative and decreases are positive. */
+  inverse?: boolean;
+  url?: NavSubItem["url"];
+  /** Optional app-owned action/menu; the component never invents an action. */
+  action?: ReactNode;
+  className?: string;
 }
 
 export interface BadgeIconProps {
