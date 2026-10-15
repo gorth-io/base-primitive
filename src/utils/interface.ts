@@ -252,6 +252,25 @@ export interface DataTableSearch {
   onValueChange: (value: string) => void;
 }
 
+export type DataTableView = "list" | "grid";
+
+export interface DataTableViewToggleProps {
+  value?: DataTableView;
+  defaultValue?: DataTableView;
+  onValueChange?: (value: DataTableView) => void;
+  disabled?: boolean;
+  className?: string;
+  id?: string;
+  "aria-label"?: string;
+  listLabel?: string;
+  gridLabel?: string;
+}
+
+export interface DataTableNav {
+  name: string;
+  description?: string;
+}
+
 export interface DataTableBaseProps<TData extends RowData> {
   columns: ColumnDef<DataTableFeatures, TData, any>[];
   data: TData[];
@@ -267,18 +286,45 @@ export interface DataTableBaseProps<TData extends RowData> {
   onReload?: () => void;
   onDownload?: () => void;
   onCreate?: () => void;
+  onImport?: () => void;
+  nav?: DataTableNav;
+  labels?: Partial<
+    Record<"toggle" | "import" | "export" | "add" | "reload", string>
+  >;
+  viewToggle?: DataTableViewToggleProps;
   render?: ReactNode;
 }
 
-export interface DataTableAllProps<TData extends RowData>
-  extends DataTableBaseProps<TData> {
+export interface DataTableToolbarProps<TData extends RowData> extends Pick<
+  DataTableBaseProps<TData>,
+  | "nav"
+  | "labels"
+  | "viewToggle"
+  | "pageSizeOptions"
+  | "onImport"
+  | "onDownload"
+  | "onCreate"
+  | "onReload"
+  | "render"
+> {
+  table: ReactTable<DataTableFeatures, TData>;
+  search?: DataTableSearch;
+  filters?: ReactNode;
+  pageSize: number;
+  onPageSizeChange: (pageSize: number) => void;
+}
+
+export interface DataTableAllProps<
+  TData extends RowData,
+> extends DataTableBaseProps<TData> {
   search?: DataTableSearchAll;
   filters?: DataTableFilterAll[];
   initialPageSize?: number;
 }
 
-export interface DataTableProps<TData extends RowData>
-  extends DataTableBaseProps<TData> {
+export interface DataTableProps<
+  TData extends RowData,
+> extends DataTableBaseProps<TData> {
   rowCount: number;
   pagination: PaginationState;
   onPaginationChange: OnChangeFn<PaginationState>;
@@ -303,18 +349,20 @@ export interface DataTableColumnHeaderProps<
 export interface DataTableSortButtonProps<
   TData extends RowData,
   TValue = unknown,
-> extends DataTableColumnHeaderProps<TData, TValue> { }
+> extends DataTableColumnHeaderProps<TData, TValue> {}
 
 export interface DataTablePaginationAllProps<TData extends RowData> {
   table: ReactTable<DataTableFeatures, TData>;
   onPageChangeStart?: () => void;
 }
 
-export interface DataTablePaginationProps<TData extends RowData>
-  extends DataTablePaginationAllProps<TData> { }
+export interface DataTablePaginationProps<
+  TData extends RowData,
+> extends DataTablePaginationAllProps<TData> {}
 
 export interface DataTableViewOptionsProps<TData extends RowData> {
   table: ReactTable<DataTableFeatures, TData>;
+  label?: string;
 }
 
 export interface DataTableFacetedFilterAllProps<

@@ -61,10 +61,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Card, CardHeader, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/custom/button";
 import { Badge } from "@/components/custom/badge";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger } from "@/components/custom/tabs";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/utils/cn";
 
@@ -81,10 +88,15 @@ import {
   Settings2,
   Check,
   RotateCw,
+  Plus,
   PlusCircle,
+  Upload,
+  Search,
   Ellipsis,
   Download,
   X,
+  Rows3,
+  Grid3X3,
 } from "lucide-react";
 import type {
   DataTableColumnHeaderProps,
@@ -97,7 +109,197 @@ import type {
   DataTableProps,
   DataTableSortButtonProps,
   DataTableViewOptionsProps,
+  DataTableToolbarProps,
+  DataTableViewToggleProps,
 } from "@/utils/interface";
+
+export type {
+  DataTableView,
+  DataTableViewToggleProps,
+} from "@/utils/interface";
+
+// Consumers decide how to render the selected layout via onValueChange.
+export function DataTableViewToggle({
+  value,
+  defaultValue = "list",
+  onValueChange,
+  disabled = false,
+  className,
+  id,
+  "aria-label": ariaLabel = "Display mode",
+  listLabel = "List view",
+  gridLabel = "Grid view",
+}: DataTableViewToggleProps) {
+  return (
+    <Tabs
+      id={id}
+      className={className}
+      value={value}
+      defaultValue={defaultValue}
+      onValueChange={(nextValue) => {
+        if (!disabled && (nextValue === "list" || nextValue === "grid")) {
+          onValueChange?.(nextValue);
+        }
+      }}
+    >
+      <TabsList aria-label={ariaLabel}>
+        <TabsTrigger
+          value="list"
+          disabled={disabled}
+          aria-label={listLabel}
+          title={listLabel}
+        >
+          <Rows3 aria-hidden="true" className="size-4" />
+        </TabsTrigger>
+        <TabsTrigger
+          value="grid"
+          disabled={disabled}
+          aria-label={gridLabel}
+          title={gridLabel}
+        >
+          <Grid3X3 aria-hidden="true" className="size-4" />
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
+  );
+}
+
+export function DataTableSearchInput({
+  className,
+  ...props
+}: React.ComponentProps<typeof Input>) {
+  return (
+    <div className="relative w-full sm:w-64">
+      <Input {...props} className={cn("pl-8", className)} />
+      <Search
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none"
+      />
+    </div>
+  );
+}
+
+function DataTableToolbar<TData extends RowData>({
+  table,
+  nav,
+  labels,
+  search,
+  filters,
+  pageSize,
+  pageSizeOptions = [10, 25, 50, 100],
+  onPageSizeChange,
+  viewToggle,
+  onImport,
+  onDownload,
+  onCreate,
+  onReload,
+  render,
+}: DataTableToolbarProps<TData>) {
+  return (
+    <>
+      <CardHeader className="flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
+        {nav && (
+          <div className="min-w-0 space-y-1">
+            <CardTitle>{nav.name}</CardTitle>
+            {nav.description && (
+              <CardDescription>{nav.description}</CardDescription>
+            )}
+          </div>
+        )}
+        <div
+          className={cn(
+            "flex min-w-0 flex-wrap items-center gap-2",
+            nav && "lg:ml-auto",
+          )}
+        >
+          {search && (
+            <DataTableSearchInput
+              aria-label={search.placeholder}
+              placeholder={search.placeholder}
+              value={search.value}
+              onChange={(event) => search.onValueChange(event.target.value)}
+            />
+          )}
+          <DataTableViewOptions
+            table={table}
+            label={labels?.toggle ?? "Toggle"}
+          />
+          {onImport && (
+            <Button
+              type="button"
+              variant="outline"
+              size="default"
+              onClick={onImport}
+              title={labels?.import ?? "Import"}
+            >
+              <Upload aria-hidden="true" />
+              {labels?.import ?? "Import"}
+            </Button>
+          )}
+          {onDownload && (
+            <Button
+              type="button"
+              variant="outline"
+              size="default"
+              onClick={onDownload}
+              title={labels?.export ?? "Export"}
+            >
+              <Download aria-hidden="true" />
+              {labels?.export ?? "Export"}
+            </Button>
+          )}
+          {onCreate && (
+            <Button
+              type="button"
+              size="default"
+              onClick={onCreate}
+              title={labels?.add ?? "Add"}
+            >
+              <Plus aria-hidden="true" />
+              {labels?.add ?? "Add"}
+            </Button>
+          )}
+          {onReload && (
+            <Button
+              type="button"
+              variant="outline"
+              size="default"
+              onClick={onReload}
+              title={labels?.reload ?? "Reload"}
+            >
+              <RotateCw aria-hidden="true" />
+              {labels?.reload ?? "Reload"}
+            </Button>
+          )}
+          {render}
+        </div>
+      </CardHeader>
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t px-6 py-4">
+        <div className="flex flex-wrap items-center gap-2">{filters}</div>
+        <div className="ms-auto flex items-center gap-2">
+          <Select
+            value={String(pageSize)}
+            onValueChange={(value) => {
+              if (value) onPageSizeChange(Number(value));
+            }}
+          >
+            <SelectTrigger aria-label="Rows per page" className="w-20">
+              <SelectValue placeholder={pageSize} />
+            </SelectTrigger>
+            <SelectContent side="bottom">
+              {pageSizeOptions.map((size) => (
+                <SelectItem key={size} value={String(size)}>
+                  {size}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <DataTableViewToggle {...viewToggle} />
+        </div>
+      </div>
+    </>
+  );
+}
 
 export const dataTableFeatures: DataTableFeatures = tableFeatures({
   columnFilteringFeature,
@@ -219,7 +421,8 @@ export function DataTablePaginationOldAll<TData extends RowData>({
       {/** px-2 */}
       <div className="text-muted-foreground flex-1 text-sm">
         <span className="font-bold text-primary">{selectedRows}</span> of{" "}
-        <span className="font-bold text-primary">{totalRows}</span> rows selected.
+        <span className="font-bold text-primary">{totalRows}</span> rows
+        selected.
       </div>
       <div className="flex items-center gap-6 lg:gap-8">
         <div className="flex items-center gap-2">
@@ -244,8 +447,7 @@ export function DataTablePaginationOldAll<TData extends RowData>({
           </Select>
         </div>
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.state.pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
+          Page {table.state.pagination.pageIndex + 1} of {table.getPageCount()}
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -315,7 +517,8 @@ export function DataTablePaginationAll<TData extends RowData>({
   const pageSize = table.state.pagination.pageSize;
   const totalRows = table.getFilteredRowModel().rows.length;
   const selectedRows = table.getFilteredSelectedRowModel().rows.length;
-  const firstVisibleRow = totalRows === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const firstVisibleRow =
+    totalRows === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const lastVisibleRow = Math.min(currentPage * pageSize, totalRows);
 
   // Build the list of visible page numbers.
@@ -365,13 +568,15 @@ export function DataTablePaginationAll<TData extends RowData>({
       <div className="flex gap-2 text-sm text-muted-foreground">
         {/** flex-1 */}
         <div>
-          Showing <span className="font-bold text-primary">{firstVisibleRow}</span> to{" "}
+          Showing{" "}
+          <span className="font-bold text-primary">{firstVisibleRow}</span> to{" "}
           <span className="font-bold text-primary">{lastVisibleRow}</span> of{" "}
           <span className="font-bold text-primary">{totalRows}</span> items.
         </div>
         <div>
           <span className="font-bold text-primary">{selectedRows}</span> of{" "}
-          <span className="font-bold text-primary">{totalRows}</span> rows selected.
+          <span className="font-bold text-primary">{totalRows}</span> rows
+          selected.
         </div>
       </div>
       <div className="flex items-center gap-6 lg:gap-8">
@@ -397,8 +602,8 @@ export function DataTablePaginationAll<TData extends RowData>({
                   variant="outline"
                   size="icon"
                   className=""
-                // onClick={() => {}}
-                // disabled
+                  // onClick={() => {}}
+                  // disabled
                 >
                   {/* <span className="px-2 text-sm text-muted-foreground">...</span> */}
                   <Ellipsis />
@@ -446,7 +651,8 @@ export function DataTablePagination<TData extends RowData>({
   const pageSize = table.state.pagination.pageSize;
   const totalRows = table.getRowCount();
   const selectedRows = Object.keys(table.state.rowSelection).length;
-  const firstVisibleRow = totalRows === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+  const firstVisibleRow =
+    totalRows === 0 ? 0 : (currentPage - 1) * pageSize + 1;
   const lastVisibleRow = Math.min(currentPage * pageSize, totalRows);
   const pageNumbers: (number | "ellipsis-start" | "ellipsis-end")[] = [];
 
@@ -482,12 +688,14 @@ export function DataTablePagination<TData extends RowData>({
     <div className="flex items-center justify-between">
       <div className="flex gap-2 text-sm text-muted-foreground">
         <div>
-          Showing <span className="font-bold text-primary">{firstVisibleRow}</span> to{" "}
+          Showing{" "}
+          <span className="font-bold text-primary">{firstVisibleRow}</span> to{" "}
           <span className="font-bold text-primary">{lastVisibleRow}</span> of{" "}
           <span className="font-bold text-primary">{totalRows}</span> items.
         </div>
         <div>
-          <span className="font-bold text-primary">{selectedRows}</span> rows selected.
+          <span className="font-bold text-primary">{selectedRows}</span> rows
+          selected.
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -549,6 +757,7 @@ export function DataTablePagination<TData extends RowData>({
 
 export function DataTableViewOptions<TData extends RowData>({
   table,
+  label,
 }: DataTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
@@ -556,15 +765,16 @@ export function DataTableViewOptions<TData extends RowData>({
         render={
           <Button
             variant="outline"
-            size="icon"
-            className="hidden lg:flex"
+            size={label ? "default" : "icon"}
             aria-label="Toggle columns"
             title="Toggle columns"
           />
         }
       >
         <Settings2 />
-        <span className="sr-only">Toggle columns</span>
+        <span className={label ? undefined : "sr-only"}>
+          {label ?? "Toggle columns"}
+        </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
         <DropdownMenuGroup>
@@ -620,18 +830,12 @@ export function DataTableFacetedFilterAll<TData extends RowData, TValue>({
         {selectedValues?.size > 0 && (
           <>
             <Separator orientation="vertical" className="mx-2 h-4" />
-            <Badge
-              variant="default"
-              className="lg:hidden"
-            >
+            <Badge variant="default" className="lg:hidden">
               {selectedValues.size}
             </Badge>
             <div className="hidden gap-1 lg:flex">
               {selectedValues.size > 2 ? (
-                <Badge
-                  variant="default"
-                  className="font-normal"
-                >
+                <Badge variant="default" className="font-normal">
                   {selectedValues.size} selected
                 </Badge>
               ) : (
@@ -735,7 +939,7 @@ export function DataTableFacetedFilter({
           <Button
             variant="outline"
             size="default"
-            className="h-9 w-auto gap-2 rounded-md border-dashed p-1 whitespace-nowrap"
+            className="w-auto gap-2 border-dashed whitespace-nowrap"
           />
         }
       >
@@ -743,7 +947,7 @@ export function DataTableFacetedFilter({
         {title}
         {selectedValues.size > 0 && (
           <>
-            <Separator orientation="vertical" className="mx-2 h-4" />
+            <Separator orientation="vertical" className="mx-2 h-9" />
             <Badge variant="default" className="lg:hidden">
               {selectedValues.size}
             </Badge>
@@ -759,7 +963,7 @@ export function DataTableFacetedFilter({
                     <Badge
                       variant="default"
                       key={String(option.value)}
-                      className="rounded-md px-1 font-normal"
+                      className=""
                     >
                       {option.label}
                     </Badge>
@@ -839,9 +1043,14 @@ export function DataTableFacetedFilter({
   );
 }
 
+// Render all data make longer time to load, but can be used for export data
 export function DataTableAll<TData extends RowData>({
   columns,
   data,
+  nav,
+  labels,
+  onImport,
+  viewToggle,
   search,
   filters,
   fluidColumn,
@@ -887,104 +1096,66 @@ export function DataTableAll<TData extends RowData>({
   }, [table.state.pagination.pageIndex, table.state.pagination.pageSize, stop]);
 
   return (
-    <Card className="p-0">
-      <CardHeader className="flex items-center justify-between pt-6">
-        <div className="flex items-center gap-2">
-          {search && (
-            <Input
-              placeholder={search.placeholder}
-              value={
-                (table.getColumn(search.column)?.getFilterValue() as string) ??
-                ""
+    <Card className="gap-0 p-0">
+      <DataTableToolbar
+        table={table}
+        nav={nav}
+        labels={labels}
+        onImport={onImport}
+        onDownload={onDownload}
+        onCreate={onCreate}
+        onReload={onReload}
+        render={render}
+        viewToggle={viewToggle}
+        pageSizeOptions={pageSizeOptions}
+        search={
+          search
+            ? {
+                placeholder: search.placeholder,
+                value:
+                  (table.getColumn(search.column)?.getFilterValue() as
+                    string | undefined) ?? "",
+                onValueChange: (value) => {
+                  table.getColumn(search.column)?.setFilterValue(value);
+                  table.setPageIndex(0);
+                },
               }
-              onChange={(event) =>
-                table
-                  .getColumn(search.column)
-                  ?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm"
-            />
-          )}
-          {filters?.map((f) => (
-            <DataTableFacetedFilterAll
-              key={f.column}
-              column={table.getColumn(f.column)}
-              title={f.title}
-              options={f.options}
-            />
-          ))}
-          {isFiltered && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => table.resetColumnFilters()}
-              aria-label="Reset filters"
-              title="Reset filters"
-            >
-              <X />
-              <span className="sr-only">Reset filters</span>
-            </Button>
-          )}
-          {/*<Button variant="secondary" className="">*/}
-          {/* Clear filters */}
-          {/*</Button>*/}
-        </div>
-        {/* <div className="flex items-center gap-2">
-         <p className="text-sm font-medium">Rows per page</p>
-         </div> */}
-        <div className="flex items-center gap-2">
-          <Select
-            value={`${table.state.pagination.pageSize}`}
-            onValueChange={(value) => {
-              startPaginationProgress();
-              table.setPageSize(Number(value));
-            }}
-          >
-            <SelectTrigger className="w-20">
-              <SelectValue placeholder={table.state.pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="bottom">
-              {pageSizeOptions.map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <DataTableViewOptions table={table} />
-          {onDownload && (
-            <Button
-              variant="outline"
-              size="icon"
-              className=""
-              onClick={onDownload}
-            >
-              <Download />
-            </Button>
-          )}
-          {onReload && (
-            <Button
-              variant="outline"
-              size="icon"
-              className=""
-              onClick={onReload}
-            >
-              <RotateCw />
-            </Button>
-          )}
-          {onCreate && (
-            <Button
-              variant="default"
-              size="icon"
-              className=""
-              onClick={onCreate}
-            >
-              <PlusCircle />
-            </Button>
-          )}
-          {render}
-        </div>
-      </CardHeader>
+            : undefined
+        }
+        filters={
+          <>
+            {filters?.map((filter) => (
+              <DataTableFacetedFilterAll
+                key={filter.column}
+                column={table.getColumn(filter.column)}
+                title={filter.title}
+                options={filter.options}
+              />
+            ))}
+            {isFiltered && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="default"
+                onClick={() => {
+                  table.resetColumnFilters();
+                  table.setPageIndex(0);
+                }}
+                title="Reset filters"
+              >
+                <X aria-hidden="true" />
+                Reset filters
+              </Button>
+            )}
+          </>
+        }
+        pageSize={table.state.pagination.pageSize}
+        onPageSizeChange={(pageSize) => {
+          startPaginationProgress();
+          table.setPageSize(pageSize);
+          table.setPageIndex(0);
+        }}
+      />
       <div className="border-y">
         <Table className="w-full table-fixed">
           <TableHeader className="h-12">
@@ -1005,9 +1176,9 @@ export function DataTableAll<TData extends RowData>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}
@@ -1058,7 +1229,7 @@ export function DataTableAll<TData extends RowData>({
           </TableBody>
         </Table>
       </div>
-      <CardFooter className="block pb-6">
+      <CardFooter className="block py-6">
         <DataTablePaginationAll
           table={table}
           onPageChangeStart={startPaginationProgress}
@@ -1071,6 +1242,10 @@ export function DataTableAll<TData extends RowData>({
 export function DataTable<TData extends RowData>({
   columns,
   data,
+  nav,
+  labels,
+  onImport,
+  viewToggle,
   rowCount,
   pagination,
   onPaginationChange,
@@ -1146,105 +1321,64 @@ export function DataTable<TData extends RowData>({
   };
 
   return (
-    <Card className="p-0" aria-busy={loading}>
-      <CardHeader className="flex items-center justify-between pt-6">
-        <div className="flex items-center gap-2">
-          {search && (
-            <Input
-              placeholder={search.placeholder}
-              value={search.value}
-              onChange={(event) => {
-                search.onValueChange(event.target.value);
-                resetPage();
-              }}
-              className="max-w-sm"
-            />
-          )}
-          {filters?.map((filter) => (
-            <DataTableFacetedFilter
-              key={filter.id}
-              title={filter.title}
-              options={filter.options}
-              value={filter.value}
-              getCount={filter.getCount}
-              onValueChange={(value) => {
-                filter.onValueChange(value);
-                resetPage();
-              }}
-            />
-          ))}
-          {isFiltered && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={resetFilters}
-              aria-label="Reset filters"
-              title="Reset filters"
-            >
-              <X />
-              <span className="sr-only">Reset filters</span>
-            </Button>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          <Select
-            value={`${pagination.pageSize}`}
-            onValueChange={(value) => {
-              startPaginationProgress();
-              onPaginationChange({ pageIndex: 0, pageSize: Number(value) })
-            }}
-          >
-            <SelectTrigger className="w-20">
-              <SelectValue placeholder={pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="bottom">
-              {pageSizeOptions.map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <DataTableViewOptions table={table} />
-          {onDownload && (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={onDownload}
-              aria-label="Export"
-              title="Export"
-            >
-              <Download />
-              <span className="sr-only">Export</span>
-            </Button>
-          )}
-          {onReload && (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={onReload}
-              aria-label="Reload"
-              title="Reload"
-            >
-              <RotateCw />
-              <span className="sr-only">Reload</span>
-            </Button>
-          )}
-          {onCreate && (
-            <Button
-              variant="default"
-              size="icon"
-              onClick={onCreate}
-              aria-label="Create"
-              title="Create"
-            >
-              <PlusCircle />
-              <span className="sr-only">Create</span>
-            </Button>
-          )}
-          {render}
-        </div>
-      </CardHeader>
+    <Card className="gap-0 p-0" aria-busy={loading}>
+      <DataTableToolbar
+        table={table}
+        nav={nav}
+        labels={labels}
+        onImport={onImport}
+        onDownload={onDownload}
+        onCreate={onCreate}
+        onReload={onReload}
+        render={render}
+        viewToggle={viewToggle}
+        pageSizeOptions={pageSizeOptions}
+        search={
+          search
+            ? {
+                ...search,
+                onValueChange: (value) => {
+                  search.onValueChange(value);
+                  resetPage();
+                },
+              }
+            : undefined
+        }
+        filters={
+          <>
+            {filters?.map((filter) => (
+              <DataTableFacetedFilter
+                key={filter.id}
+                title={filter.title}
+                options={filter.options}
+                value={filter.value}
+                getCount={filter.getCount}
+                onValueChange={(value) => {
+                  filter.onValueChange(value);
+                  resetPage();
+                }}
+              />
+            ))}
+            {isFiltered && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="default"
+                onClick={resetFilters}
+                title="Reset filters"
+              >
+                <X aria-hidden="true" />
+                Reset filters
+              </Button>
+            )}
+          </>
+        }
+        pageSize={pagination.pageSize}
+        onPageSizeChange={(pageSize) => {
+          startPaginationProgress();
+          onPaginationChange({ pageIndex: 0, pageSize });
+        }}
+      />
       <div className="border-y">
         <Table className="w-full table-fixed">
           <TableHeader className="h-12">
@@ -1265,9 +1399,9 @@ export function DataTable<TData extends RowData>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}
@@ -1327,7 +1461,7 @@ export function DataTable<TData extends RowData>({
           </TableBody>
         </Table>
       </div>
-      <CardFooter className="block pb-6">
+      <CardFooter className="block py-6">
         <DataTablePagination
           table={table}
           onPageChangeStart={startPaginationProgress}
