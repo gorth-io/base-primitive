@@ -765,7 +765,7 @@ export function DataTablePagination<TData extends RowData>({
               className=""
               variant="outline"
               size="icon"
-              aria-hidden="true"
+            // aria-hidden="true"
             >
               <Ellipsis className="size-4" />
             </Button>
