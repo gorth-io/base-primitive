@@ -928,7 +928,7 @@ export function DataTableFacetedFilterAll<TData extends RowData, TValue>({
                       readOnly
                       tabIndex={-1}
                       aria-hidden="true"
-                      className="pointer-events-none [&_svg]:text-current!"
+                      className="pointer-events-none"
                     />
                     {option.icon && (
                       <option.icon className="h-4 w-4 text-muted-foreground" />
@@ -1046,7 +1046,7 @@ export function DataTableFacetedFilter({
                       readOnly
                       tabIndex={-1}
                       aria-hidden="true"
-                      className="pointer-events-none [&_svg]:text-current!"
+                      className="pointer-events-none"
                     />
                     {option.icon && (
                       <option.icon className="text-muted-foreground" />

@@ -5,6 +5,8 @@ import {
   type ReactNode,
 } from "react";
 import { expect, it, vi } from "vitest";
+import { readFileSync } from "node:fs";
+import { compile } from "tailwindcss";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CommandItem } from "@/components/custom/command";
 import {
@@ -46,10 +48,7 @@ it("uses default shadcn checkboxes as controlled indicators without a second cli
     expect(checkbox.props.readOnly).toBe(true);
     expect(checkbox.props.tabIndex).toBe(-1);
     expect(checkbox.props["aria-hidden"]).toBe("true");
-    expect(checkbox.props.className).toContain("pointer-events-none");
-    // CommandItem colors all descendant SVGs on highlight. The important
-    // currentColor override keeps the tick in the checkbox's own theme color.
-    expect(checkbox.props.className).toContain("[&_svg]:text-current!");
+    expect(checkbox.props.className).toBe("pointer-events-none");
     expect(checkbox.props.onCheckedChange).toBeUndefined();
   }
 });
@@ -83,9 +82,21 @@ it("also uses shadcn Checkbox in the all-data filter and clears its last value",
   expect(
     find(tree, Checkbox).map((checkbox) => checkbox.props.checked),
   ).toEqual([true, false]);
-  for (const checkbox of find(tree, Checkbox)) {
-    expect(checkbox.props.className).toContain("[&_svg]:text-current!");
-  }
   find(tree, CommandItem)[0].props.onSelect();
   expect(changed).toHaveBeenCalledExactlyOnceWith(undefined);
+});
+
+it("limits highlighted command icon colors to direct children, excluding checkbox ticks", async () => {
+  const source = readFileSync(
+    new URL("../src/components/custom/command.tsx", import.meta.url),
+    "utf8",
+  );
+  const variant = "data-selected:[&>svg]:text-foreground";
+  expect(source).toContain(variant);
+  expect(source).not.toContain("data-selected:**:[svg]:text-foreground");
+  const compiler = await compile(
+    "@theme { --color-foreground: #fafafa; } @tailwind utilities;",
+  );
+  const css = compiler.build([variant]);
+  expect(css).toContain("[data-selected] > svg");
 });
