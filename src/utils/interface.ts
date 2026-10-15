@@ -289,7 +289,7 @@ export interface DataTableBaseProps<TData extends RowData> {
   onImport?: () => void;
   /** Show the column menu and notify the consumer when its trigger is clicked. */
   onToggle?: () => void;
-  /** Action button presentation; icon buttons retain accessible labels and titles. */
+  /** Action button presentation; icon buttons retain accessible labels. */
   feat?: "icon" | "default";
   nav?: DataTableNav;
   labels?: Partial<

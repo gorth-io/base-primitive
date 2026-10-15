@@ -148,7 +148,6 @@ export function DataTableViewToggle({
           className="size-9 p-0 has-[>svg]:px-0"
           disabled={disabled}
           aria-label={listLabel}
-          title={listLabel}
         >
           <Rows3 aria-hidden="true" className="size-4" />
         </TabsTrigger>
@@ -157,7 +156,6 @@ export function DataTableViewToggle({
           className="size-9 p-0 has-[>svg]:px-0"
           disabled={disabled}
           aria-label={gridLabel}
-          title={gridLabel}
         >
           <Grid3X3 aria-hidden="true" className="size-4" />
         </TabsTrigger>
@@ -243,7 +241,6 @@ function DataTableToolbar<TData extends RowData>({
           size={feat}
           onClick={onImport}
           aria-label={labels?.import ?? "Import"}
-          title={labels?.import ?? "Import"}
         >
           <Upload aria-hidden="true" />
           <span className={feat === "icon" ? "sr-only" : undefined}>
@@ -258,7 +255,6 @@ function DataTableToolbar<TData extends RowData>({
           size={feat}
           onClick={onDownload}
           aria-label={labels?.export ?? "Export"}
-          title={labels?.export ?? "Export"}
         >
           <Download aria-hidden="true" />
           <span className={feat === "icon" ? "sr-only" : undefined}>
@@ -273,7 +269,6 @@ function DataTableToolbar<TData extends RowData>({
           size={feat}
           onClick={onReload}
           aria-label={labels?.reload ?? "Reload"}
-          title={labels?.reload ?? "Reload"}
         >
           <RotateCw aria-hidden="true" />
           <span className={feat === "icon" ? "sr-only" : undefined}>
@@ -287,7 +282,6 @@ function DataTableToolbar<TData extends RowData>({
           size={feat}
           onClick={onCreate}
           aria-label={labels?.add ?? "Add"}
-          title={labels?.add ?? "Add"}
         >
           <Plus aria-hidden="true" />
           <span className={feat === "icon" ? "sr-only" : undefined}>
@@ -725,7 +719,7 @@ export function DataTablePagination<TData extends RowData>({
 
   return (
     <div className="flex items-center justify-between">
-      <div className="flex gap-2 text-sm text-muted-foreground">
+      <div className="flex flex-col text-sm text-muted-foreground">
         <div className="flex flex-row items-center h-4.5 gap-1">
           Showing
           <span className="font-bold text-primary">{firstVisibleRow}</span> to
@@ -747,7 +741,6 @@ export function DataTablePagination<TData extends RowData>({
           }}
           disabled={!table.getCanPreviousPage()}
           aria-label="Go to previous page"
-          title="Go to previous page"
         >
           <ChevronLeft />
         </Button>
@@ -767,13 +760,15 @@ export function DataTablePagination<TData extends RowData>({
               {page}
             </Button>
           ) : (
-            <span
+            <Button
               key={page}
-              className="flex size-9 items-center justify-center text-muted-foreground"
+              className=""
+              variant="outline"
+              size="icon"
               aria-hidden="true"
             >
-              <Ellipsis />
-            </span>
+              <Ellipsis className="size-4" />
+            </Button>
           ),
         )}
         <Button
@@ -785,7 +780,6 @@ export function DataTablePagination<TData extends RowData>({
           }}
           disabled={!table.getCanNextPage()}
           aria-label="Go to next page"
-          title="Go to next page"
         >
           <ChevronRight />
         </Button>
@@ -809,7 +803,6 @@ export function DataTableViewOptions<TData extends RowData>({
             size={feat}
             onClick={onToggle}
             aria-label={label ?? "Toggle columns"}
-            title={label ?? "Toggle columns"}
           />
         }
       >
@@ -1187,7 +1180,6 @@ export function DataTableAll<TData extends RowData>({
                   table.resetColumnFilters();
                   table.setPageIndex(0);
                 }}
-                title="Reset filters"
               >
                 <X aria-hidden="true" />
                 Reset filters
@@ -1415,7 +1407,6 @@ export function DataTable<TData extends RowData>({
                 variant="ghost"
                 size="default"
                 onClick={resetFilters}
-                title="Reset filters"
               >
                 <X aria-hidden="true" />
                 Reset filters

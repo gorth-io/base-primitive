@@ -63,12 +63,12 @@ describe("data-table toolbar", () => {
       expect(html).toContain("pl-8");
       expect(html).toContain("Alice");
       const header = html.slice(0, html.indexOf('aria-label="Rows per page"'));
-      const importIndex = header.indexOf('title="Import"');
-      const exportIndex = header.indexOf('title="Export"');
-      const addIndex = header.indexOf('title="Add User"');
-      expect(importIndex).toBeGreaterThan(header.indexOf('title="Toggle"'));
+      const importIndex = header.indexOf('aria-label="Import"');
+      const exportIndex = header.indexOf('aria-label="Export"');
+      const addIndex = header.indexOf('aria-label="Add User"');
+      expect(importIndex).toBeGreaterThan(header.indexOf('aria-label="Toggle"'));
       expect(exportIndex).toBeGreaterThan(importIndex);
-      const reloadIndex = header.indexOf('title="Reload"');
+      const reloadIndex = header.indexOf('aria-label="Reload"');
       expect(reloadIndex).toBeGreaterThan(exportIndex);
       expect(addIndex).toBeGreaterThan(reloadIndex);
       expect(header).toContain("h-9 gap-1.5 px-2.5");
@@ -77,6 +77,7 @@ describe("data-table toolbar", () => {
         html.indexOf('aria-label="Rows per page"'),
       );
       expect(html).not.toContain("Workspace");
+      expect(html).not.toMatch(/<button\b[^>]*\stitle=/);
     },
   );
 
@@ -96,7 +97,7 @@ describe("data-table toolbar", () => {
   });
 
   it.each(["manual", "all"])(
-    "keeps search, filters, page size and titled actions in one header without nav (%s)",
+    "keeps search, filters, page size and labeled actions in one header without nav (%s)",
     (mode) => {
       const shared = { columns, data: rows, ...actions };
       const html = renderToStaticMarkup(
@@ -134,11 +135,11 @@ describe("data-table toolbar", () => {
         'placeholder="Find user"',
         "Name filter",
         'aria-label="Rows per page"',
-        'title="Toggle"',
-        'title="Import"',
-        'title="Export"',
-        'title="Reload"',
-        'title="Add"',
+        'aria-label="Toggle"',
+        'aria-label="Import"',
+        'aria-label="Export"',
+        'aria-label="Reload"',
+        'aria-label="Add"',
       ].map((text) => header.indexOf(text));
       expect(positions.every((position) => position >= 0)).toBe(true);
       expect(positions).toEqual([...positions].sort((a, b) => a - b));
@@ -154,7 +155,7 @@ describe("data-table toolbar", () => {
         createElement(DataTableAll, { columns, data: rows, nav }),
       );
       for (const label of ["Toggle", "Import", "Export", "Reload", "Add"]) {
-        expect(html).not.toContain(`title="${label}"`);
+        expect(html).not.toContain(`aria-label="${label}"`);
       }
     },
   );
@@ -177,8 +178,8 @@ describe("data-table toolbar", () => {
         onCreate: "Add",
       };
       for (const [key, label] of Object.entries(labels)) {
-        if (key === callback) expect(html).toContain(`title="${label}"`);
-        else expect(html).not.toContain(`title="${label}"`);
+        if (key === callback) expect(html).toContain(`aria-label="${label}"`);
+        else expect(html).not.toContain(`aria-label="${label}"`);
       }
     },
   );
@@ -208,7 +209,7 @@ describe("data-table toolbar", () => {
       expect(header).not.toContain("h-9 gap-1.5 px-2.5");
       for (const label of ["Toggle", "Import", "Export", "Reload", "Add"]) {
         expect(header).toContain(`aria-label="${label}"`);
-        expect(header).toContain(`title="${label}"`);
+        expect(header).not.toContain(`title="${label}"`);
         expect(header).toContain(`class="sr-only">${label}</span>`);
       }
     },
@@ -221,6 +222,7 @@ describe("data-table toolbar", () => {
     for (const tab of tabs) {
       expect(tab).toContain("size-9");
       expect(tab).not.toContain("px-3");
+      expect(tab).not.toContain("title=");
     }
   });
 
