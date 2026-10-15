@@ -287,6 +287,10 @@ export interface DataTableBaseProps<TData extends RowData> {
   onDownload?: () => void;
   onCreate?: () => void;
   onImport?: () => void;
+  /** Show the column menu and notify the consumer when its trigger is clicked. */
+  onToggle?: () => void;
+  /** Action button presentation; icon buttons retain accessible labels and titles. */
+  feat?: "icon" | "default";
   nav?: DataTableNav;
   labels?: Partial<
     Record<"toggle" | "import" | "export" | "add" | "reload", string>
@@ -305,6 +309,8 @@ export interface DataTableToolbarProps<TData extends RowData> extends Pick<
   | "onDownload"
   | "onCreate"
   | "onReload"
+  | "onToggle"
+  | "feat"
   | "render"
 > {
   table: ReactTable<DataTableFeatures, TData>;
@@ -363,6 +369,8 @@ export interface DataTablePaginationProps<
 export interface DataTableViewOptionsProps<TData extends RowData> {
   table: ReactTable<DataTableFeatures, TData>;
   label?: string;
+  feat?: "icon" | "default";
+  onToggle?: () => void;
 }
 
 export interface DataTableFacetedFilterAllProps<

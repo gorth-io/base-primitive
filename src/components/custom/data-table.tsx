@@ -145,6 +145,7 @@ export function DataTableViewToggle({
       <TabsList aria-label={ariaLabel}>
         <TabsTrigger
           value="list"
+          className="size-9 p-0 has-[>svg]:px-0"
           disabled={disabled}
           aria-label={listLabel}
           title={listLabel}
@@ -153,6 +154,7 @@ export function DataTableViewToggle({
         </TabsTrigger>
         <TabsTrigger
           value="grid"
+          className="size-9 p-0 has-[>svg]:px-0"
           disabled={disabled}
           aria-label={gridLabel}
           title={gridLabel}
@@ -193,107 +195,144 @@ function DataTableToolbar<TData extends RowData>({
   onDownload,
   onCreate,
   onReload,
+  onToggle,
+  feat = "default",
   render,
 }: DataTableToolbarProps<TData>) {
+  const searchInput = search && (
+    <DataTableSearchInput
+      aria-label={search.placeholder}
+      placeholder={search.placeholder}
+      value={search.value}
+      onChange={(event) => search.onValueChange(event.target.value)}
+    />
+  );
+  const pageSizeSelect = (
+    <Select
+      value={String(pageSize)}
+      onValueChange={(value) => {
+        if (value) onPageSizeChange(Number(value));
+      }}
+    >
+      <SelectTrigger aria-label="Rows per page" className="w-20">
+        <SelectValue placeholder={pageSize} />
+      </SelectTrigger>
+      <SelectContent side="bottom">
+        {pageSizeOptions.map((size) => (
+          <SelectItem key={size} value={String(size)}>
+            {size}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+  const actions = (
+    <>
+      {onToggle && (
+        <DataTableViewOptions
+          table={table}
+          label={labels?.toggle ?? "Toggle"}
+          feat={feat}
+          onToggle={onToggle}
+        />
+      )}
+      {onImport && (
+        <Button
+          type="button"
+          variant="outline"
+          size={feat}
+          onClick={onImport}
+          aria-label={labels?.import ?? "Import"}
+          title={labels?.import ?? "Import"}
+        >
+          <Upload aria-hidden="true" />
+          <span className={feat === "icon" ? "sr-only" : undefined}>
+            {labels?.import ?? "Import"}
+          </span>
+        </Button>
+      )}
+      {onDownload && (
+        <Button
+          type="button"
+          variant="outline"
+          size={feat}
+          onClick={onDownload}
+          aria-label={labels?.export ?? "Export"}
+          title={labels?.export ?? "Export"}
+        >
+          <Download aria-hidden="true" />
+          <span className={feat === "icon" ? "sr-only" : undefined}>
+            {labels?.export ?? "Export"}
+          </span>
+        </Button>
+      )}
+      {onReload && (
+        <Button
+          type="button"
+          variant="outline"
+          size={feat}
+          onClick={onReload}
+          aria-label={labels?.reload ?? "Reload"}
+          title={labels?.reload ?? "Reload"}
+        >
+          <RotateCw aria-hidden="true" />
+          <span className={feat === "icon" ? "sr-only" : undefined}>
+            {labels?.reload ?? "Reload"}
+          </span>
+        </Button>
+      )}
+      {onCreate && (
+        <Button
+          type="button"
+          size={feat}
+          onClick={onCreate}
+          aria-label={labels?.add ?? "Add"}
+          title={labels?.add ?? "Add"}
+        >
+          <Plus aria-hidden="true" />
+          <span className={feat === "icon" ? "sr-only" : undefined}>
+            {labels?.add ?? "Add"}
+          </span>
+        </Button>
+      )}
+    </>
+  );
+
+  if (!nav) {
+    return (
+      <CardHeader className="flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
+          {searchInput}
+          {filters}
+        </div>
+        <div className="flex flex-wrap items-center gap-2 lg:ml-auto">
+          {pageSizeSelect}
+          {render}
+          {actions}
+        </div>
+      </CardHeader>
+    );
+  }
+
   return (
     <>
       <CardHeader className="flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
-        {nav && (
-          <div className="min-w-0 space-y-1">
-            <CardTitle>{nav.name}</CardTitle>
-            {nav.description && (
-              <CardDescription>{nav.description}</CardDescription>
-            )}
-          </div>
-        )}
-        <div
-          className={cn(
-            "flex min-w-0 flex-wrap items-center gap-2",
-            nav && "lg:ml-auto",
+        <div className="min-w-0 space-y-1">
+          <CardTitle>{nav.name}</CardTitle>
+          {nav.description && (
+            <CardDescription>{nav.description}</CardDescription>
           )}
-        >
-          {search && (
-            <DataTableSearchInput
-              aria-label={search.placeholder}
-              placeholder={search.placeholder}
-              value={search.value}
-              onChange={(event) => search.onValueChange(event.target.value)}
-            />
-          )}
-          <DataTableViewOptions
-            table={table}
-            label={labels?.toggle ?? "Toggle"}
-          />
-          {onImport && (
-            <Button
-              type="button"
-              variant="outline"
-              size="default"
-              onClick={onImport}
-              title={labels?.import ?? "Import"}
-            >
-              <Upload aria-hidden="true" />
-              {labels?.import ?? "Import"}
-            </Button>
-          )}
-          {onDownload && (
-            <Button
-              type="button"
-              variant="outline"
-              size="default"
-              onClick={onDownload}
-              title={labels?.export ?? "Export"}
-            >
-              <Download aria-hidden="true" />
-              {labels?.export ?? "Export"}
-            </Button>
-          )}
-          {onCreate && (
-            <Button
-              type="button"
-              size="default"
-              onClick={onCreate}
-              title={labels?.add ?? "Add"}
-            >
-              <Plus aria-hidden="true" />
-              {labels?.add ?? "Add"}
-            </Button>
-          )}
-          {onReload && (
-            <Button
-              type="button"
-              variant="outline"
-              size="default"
-              onClick={onReload}
-              title={labels?.reload ?? "Reload"}
-            >
-              <RotateCw aria-hidden="true" />
-              {labels?.reload ?? "Reload"}
-            </Button>
-          )}
+        </div>
+        <div className="flex min-w-0 flex-wrap items-center gap-2 lg:ml-auto">
+          {searchInput}
           {render}
+          {actions}
         </div>
       </CardHeader>
       <div className="flex flex-wrap items-center justify-between gap-4 border-t px-6 py-4">
         <div className="flex flex-wrap items-center gap-2">{filters}</div>
         <div className="ms-auto flex items-center gap-2">
-          <Select
-            value={String(pageSize)}
-            onValueChange={(value) => {
-              if (value) onPageSizeChange(Number(value));
-            }}
-          >
-            <SelectTrigger aria-label="Rows per page" className="w-20">
-              <SelectValue placeholder={pageSize} />
-            </SelectTrigger>
-            <SelectContent side="bottom">
-              {pageSizeOptions.map((size) => (
-                <SelectItem key={size} value={String(size)}>
-                  {size}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {pageSizeSelect}
           <DataTableViewToggle {...viewToggle} />
         </div>
       </div>
@@ -602,8 +641,8 @@ export function DataTablePaginationAll<TData extends RowData>({
                   variant="outline"
                   size="icon"
                   className=""
-                  // onClick={() => {}}
-                  // disabled
+                // onClick={() => {}}
+                // disabled
                 >
                   {/* <span className="px-2 text-sm text-muted-foreground">...</span> */}
                   <Ellipsis />
@@ -687,15 +726,15 @@ export function DataTablePagination<TData extends RowData>({
   return (
     <div className="flex items-center justify-between">
       <div className="flex gap-2 text-sm text-muted-foreground">
-        <div>
-          Showing{" "}
-          <span className="font-bold text-primary">{firstVisibleRow}</span> to{" "}
-          <span className="font-bold text-primary">{lastVisibleRow}</span> of{" "}
+        <div className="flex flex-row items-center h-4.5 gap-1">
+          Showing
+          <span className="font-bold text-primary">{firstVisibleRow}</span> to
+          <span className="font-bold text-primary">{lastVisibleRow}</span> of
           <span className="font-bold text-primary">{totalRows}</span> items.
         </div>
-        <div>
-          <span className="font-bold text-primary">{selectedRows}</span> rows
-          selected.
+        <div className="flex flex-row items-center h-4.5 gap-1">
+          Selected
+          <span className="font-bold text-primary">{selectedRows}</span> rows.
         </div>
       </div>
       <div className="flex items-center gap-2">
@@ -758,6 +797,8 @@ export function DataTablePagination<TData extends RowData>({
 export function DataTableViewOptions<TData extends RowData>({
   table,
   label,
+  feat = label ? "default" : "icon",
+  onToggle,
 }: DataTableViewOptionsProps<TData>) {
   return (
     <DropdownMenu>
@@ -765,14 +806,15 @@ export function DataTableViewOptions<TData extends RowData>({
         render={
           <Button
             variant="outline"
-            size={label ? "default" : "icon"}
-            aria-label="Toggle columns"
-            title="Toggle columns"
+            size={feat}
+            onClick={onToggle}
+            aria-label={label ?? "Toggle columns"}
+            title={label ?? "Toggle columns"}
           />
         }
       >
         <Settings2 />
-        <span className={label ? undefined : "sr-only"}>
+        <span className={feat === "icon" ? "sr-only" : undefined}>
           {label ?? "Toggle columns"}
         </span>
       </DropdownMenuTrigger>
@@ -947,7 +989,7 @@ export function DataTableFacetedFilter({
         {title}
         {selectedValues.size > 0 && (
           <>
-            <Separator orientation="vertical" className="mx-2 h-9" />
+            <Separator orientation="vertical" className="h-9" />
             <Badge variant="default" className="lg:hidden">
               {selectedValues.size}
             </Badge>
@@ -1048,6 +1090,8 @@ export function DataTableAll<TData extends RowData>({
   columns,
   data,
   nav,
+  feat = "default",
+  onToggle,
   labels,
   onImport,
   viewToggle,
@@ -1100,6 +1144,8 @@ export function DataTableAll<TData extends RowData>({
       <DataTableToolbar
         table={table}
         nav={nav}
+        feat={feat}
+        onToggle={onToggle}
         labels={labels}
         onImport={onImport}
         onDownload={onDownload}
@@ -1111,15 +1157,15 @@ export function DataTableAll<TData extends RowData>({
         search={
           search
             ? {
-                placeholder: search.placeholder,
-                value:
-                  (table.getColumn(search.column)?.getFilterValue() as
-                    string | undefined) ?? "",
-                onValueChange: (value) => {
-                  table.getColumn(search.column)?.setFilterValue(value);
-                  table.setPageIndex(0);
-                },
-              }
+              placeholder: search.placeholder,
+              value:
+                (table.getColumn(search.column)?.getFilterValue() as
+                  string | undefined) ?? "",
+              onValueChange: (value) => {
+                table.getColumn(search.column)?.setFilterValue(value);
+                table.setPageIndex(0);
+              },
+            }
             : undefined
         }
         filters={
@@ -1176,9 +1222,9 @@ export function DataTableAll<TData extends RowData>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   );
                 })}
@@ -1243,6 +1289,8 @@ export function DataTable<TData extends RowData>({
   columns,
   data,
   nav,
+  feat = "default",
+  onToggle,
   labels,
   onImport,
   viewToggle,
@@ -1325,6 +1373,8 @@ export function DataTable<TData extends RowData>({
       <DataTableToolbar
         table={table}
         nav={nav}
+        feat={feat}
+        onToggle={onToggle}
         labels={labels}
         onImport={onImport}
         onDownload={onDownload}
@@ -1336,12 +1386,12 @@ export function DataTable<TData extends RowData>({
         search={
           search
             ? {
-                ...search,
-                onValueChange: (value) => {
-                  search.onValueChange(value);
-                  resetPage();
-                },
-              }
+              ...search,
+              onValueChange: (value) => {
+                search.onValueChange(value);
+                resetPage();
+              },
+            }
             : undefined
         }
         filters={
@@ -1399,9 +1449,9 @@ export function DataTable<TData extends RowData>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
                     </TableHead>
                   );
                 })}
