@@ -646,10 +646,15 @@ export function DataTablePaginationAll<TData extends RowData>({
                   variant={currentPage === page ? "default" : "outline"}
                   size="icon"
                   className=""
-                  onClick={() => {
-                    onPageChangeStart?.();
-                    table.setPageIndex((page as number) - 1);
-                  }}
+                  onClick={
+                    currentPage === page
+                      ? undefined
+                      : () => {
+                          onPageChangeStart?.();
+                          table.setPageIndex((page as number) - 1);
+                        }
+                  }
+                  aria-current={currentPage === page ? "page" : undefined}
                 >
                   <span className="">{page}</span>
                 </Button>
@@ -750,10 +755,14 @@ export function DataTablePagination<TData extends RowData>({
               key={page}
               variant={currentPage === page ? "default" : "outline"}
               size="icon"
-              onClick={() => {
-                onPageChangeStart?.();
-                table.setPageIndex(page - 1);
-              }}
+              onClick={
+                currentPage === page
+                  ? undefined
+                  : () => {
+                      onPageChangeStart?.();
+                      table.setPageIndex(page - 1);
+                    }
+              }
               aria-label={`Go to page ${page}`}
               aria-current={currentPage === page ? "page" : undefined}
             >
@@ -919,7 +928,7 @@ export function DataTableFacetedFilterAll<TData extends RowData, TValue>({
                       readOnly
                       tabIndex={-1}
                       aria-hidden="true"
-                      className="pointer-events-none"
+                      className="pointer-events-none [&_svg]:text-current!"
                     />
                     {option.icon && (
                       <option.icon className="h-4 w-4 text-muted-foreground" />
@@ -1037,7 +1046,7 @@ export function DataTableFacetedFilter({
                       readOnly
                       tabIndex={-1}
                       aria-hidden="true"
-                      className="pointer-events-none"
+                      className="pointer-events-none [&_svg]:text-current!"
                     />
                     {option.icon && (
                       <option.icon className="text-muted-foreground" />
