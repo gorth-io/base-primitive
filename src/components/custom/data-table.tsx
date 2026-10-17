@@ -43,10 +43,11 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/components/custom/select";
 import {
   Command,
   CommandEmpty,
@@ -207,6 +208,10 @@ function DataTableToolbar<TData extends RowData>({
   );
   const pageSizeSelect = (
     <Select
+      items={pageSizeOptions.map((size) => ({
+        label: String(size),
+        value: String(size),
+      }))}
       value={String(pageSize)}
       onValueChange={(value) => {
         if (value) onPageSizeChange(Number(value));
@@ -216,11 +221,13 @@ function DataTableToolbar<TData extends RowData>({
         <SelectValue placeholder={pageSize} />
       </SelectTrigger>
       <SelectContent side="bottom">
-        {pageSizeOptions.map((size) => (
-          <SelectItem key={size} value={String(size)}>
-            {size}
-          </SelectItem>
-        ))}
+        <SelectGroup>
+          {pageSizeOptions.map((size) => (
+            <SelectItem key={size} value={String(size)}>
+              {size}
+            </SelectItem>
+          ))}
+        </SelectGroup>
       </SelectContent>
     </Select>
   );
@@ -461,6 +468,10 @@ export function DataTablePaginationOldAll<TData extends RowData>({
         <div className="flex items-center gap-2">
           <p className="text-sm font-medium">Rows per page</p>
           <Select
+            items={[7, 10, 25, 50, 100].map((size) => ({
+              label: String(size),
+              value: String(size),
+            }))}
             value={`${table.state.pagination.pageSize}`}
             onValueChange={(value) => {
               onPageChangeStart?.();
@@ -471,11 +482,13 @@ export function DataTablePaginationOldAll<TData extends RowData>({
               <SelectValue placeholder={table.state.pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
-              {[7, 10, 25, 50, 100].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
+              <SelectGroup>
+                {[7, 10, 25, 50, 100].map((pageSize) => (
+                  <SelectItem key={pageSize} value={`${pageSize}`}>
+                    {pageSize}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
             </SelectContent>
           </Select>
         </div>

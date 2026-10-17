@@ -7,6 +7,7 @@ export * from "@/components/custom/dropdown";
 export * from "@/components/custom/drawer";
 // export * from "@/components/custom/form";
 export * from "@/components/custom/radio";
+export * from "@/components/custom/select";
 export * from "@/components/custom/sidebar";
 export * from "@/components/custom/tabs";
 // export * from "@/components/custom/temp";

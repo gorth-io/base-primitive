@@ -129,8 +129,8 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  --professional-main: #EC6683;
-  --professional-sub: #E091A0;
+  --professional-main: #ec6683;
+  --professional-sub: #e091a0;
 
   --professional-primary-1: #696cff;
   --professional-primary-2: #0d9394;
@@ -138,11 +138,31 @@
   --professional-primary-4: #eb3d63;
   --professional-primary-5: #2092ec;
 
-  --professional-primary-alt-1: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-primary-1));
-  --professional-primary-alt-2: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-primary-2));
-  --professional-primary-alt-3: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-primary-3));
-  --professional-primary-alt-4: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-primary-4));
-  --professional-primary-alt-5: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-primary-5));
+  --professional-primary-alt-1: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-primary-1)
+  );
+  --professional-primary-alt-2: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-primary-2)
+  );
+  --professional-primary-alt-3: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-primary-3)
+  );
+  --professional-primary-alt-4: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-primary-4)
+  );
+  --professional-primary-alt-5: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-primary-5)
+  );
 
   --professional-secondary: #8592a3;
   --professional-success: #71dd37;
@@ -155,14 +175,46 @@
   --professional-gray: #91979f;
   --professional-paper: #ffffff;
 
-  --professional-secondary-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-success-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-info-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-warning-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-danger-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-light-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-dark-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-gray-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
+  --professional-secondary-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-success-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-info-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-warning-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-danger-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-light-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-dark-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-gray-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
 
   --professional-blue: #007bff;
   --professional-indigo: #6610f2;
@@ -217,8 +269,8 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-  --professional-main: #EC6683;
-  --professional-sub: #F4B2BD;
+  --professional-main: #ec6683;
+  --professional-sub: #f4b2bd;
 
   --professional-primary-1: #696cff;
   --professional-primary-2: #0d9394;
@@ -226,11 +278,31 @@
   --professional-primary-4: #eb3d63;
   --professional-primary-5: #2092ec;
 
-  --professional-primary-alt-1: color-mix(in sRGB, var(--professional-dark) 84%, var(--professional-primary-1));
-  --professional-primary-alt-2: color-mix(in sRGB, var(--professional-dark) 84%, var(--professional-primary-2));
-  --professional-primary-alt-3: color-mix(in sRGB, var(--professional-dark) 84%, var(--professional-primary-3));
-  --professional-primary-alt-4: color-mix(in sRGB, var(--professional-dark) 84%, var(--professional-primary-4));
-  --professional-primary-alt-5: color-mix(in sRGB, var(--professional-dark) 84%, var(--professional-primary-5));
+  --professional-primary-alt-1: color-mix(
+    in sRGB,
+    var(--professional-dark) 84%,
+    var(--professional-primary-1)
+  );
+  --professional-primary-alt-2: color-mix(
+    in sRGB,
+    var(--professional-dark) 84%,
+    var(--professional-primary-2)
+  );
+  --professional-primary-alt-3: color-mix(
+    in sRGB,
+    var(--professional-dark) 84%,
+    var(--professional-primary-3)
+  );
+  --professional-primary-alt-4: color-mix(
+    in sRGB,
+    var(--professional-dark) 84%,
+    var(--professional-primary-4)
+  );
+  --professional-primary-alt-5: color-mix(
+    in sRGB,
+    var(--professional-dark) 84%,
+    var(--professional-primary-5)
+  );
 
   --professional-secondary: #8592a3;
   --professional-success: #71dd37;
@@ -243,14 +315,46 @@
   --professional-gray: #8f90a5;
   --professional-paper: #2b2c40;
 
-  --professional-secondary-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-success-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-info-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-warning-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-danger-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-light-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-dark-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
-  --professional-gray-alt: color-mix(in sRGB, var(--professional-paper) 84%, var(--professional-secondary));
+  --professional-secondary-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-success-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-info-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-warning-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-danger-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-light-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-dark-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
+  --professional-gray-alt: color-mix(
+    in sRGB,
+    var(--professional-paper) 84%,
+    var(--professional-secondary)
+  );
 
   --professional-blue: #007bff;
   --professional-indigo: #6610f2;
@@ -280,8 +384,8 @@
     @apply bg-background text-foreground;
   }
   button:not(:disabled),
-    [role="button"]:not(:disabled) {
-      cursor: pointer;
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
   html {
     @apply font-sans;

@@ -20,10 +20,11 @@ import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/custom/select"
 import { cn } from "cn"
 
 interface ColorPickerContextValue {
@@ -294,16 +295,22 @@ export const ColorPickerOutput = ({ className, ...props }: ColorPickerOutputProp
   const { mode, setMode } = useColorPicker()
 
   return (
-    <Select onValueChange={value => value && setMode(value)} value={mode}>
+    <Select
+      items={formats.map(format => ({ label: format.toUpperCase(), value: format }))}
+      onValueChange={value => value && setMode(value)}
+      value={mode}
+    >
       <SelectTrigger className="h-8 w-20 shrink-0 text-xs" {...(props as any)}>
         <SelectValue placeholder="Mode" />
       </SelectTrigger>
       <SelectContent>
-        {formats.map(format => (
-          <SelectItem className="text-xs" key={format} value={format}>
-            {format.toUpperCase()}
-          </SelectItem>
-        ))}
+        <SelectGroup>
+          {formats.map(format => (
+            <SelectItem className="text-xs" key={format} value={format}>
+              {format.toUpperCase()}
+            </SelectItem>
+          ))}
+        </SelectGroup>
       </SelectContent>
     </Select>
   )
