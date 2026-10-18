@@ -14,7 +14,7 @@ import type { ThemeProviderProps, UseThemeProps } from "next-themes"
 import { setCookie, removeCookie } from '@/lib/cookies'
 import { useCookie } from "@/hooks/use-cookie"
 
-const THEME_COOKIE_NAME = "color-theme"
+const THEME_COOKIE_NAME = "color_theme"
 const DEFAULT_THEMES = ["light", "dark"]
 
 const ThemeContext = createContext<UseThemeProps | null>(null)

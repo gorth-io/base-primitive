@@ -174,7 +174,7 @@
     "@tanstack/ai": "^0.69.0",
     "@tanstack/ai-react": "^0.30.4",
     "@tanstack/react-form": "^1.33.5",
-    "@tanstack/react-query": "^5.104.3",
+    "@tanstack/react-query": "^5.104.4",
     "@tanstack/react-ranger": "^0.0.5",
     "@tanstack/react-router": "^1.170.45",
     "@tanstack/react-table": "^9.3.1",

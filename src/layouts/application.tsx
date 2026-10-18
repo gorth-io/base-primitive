@@ -75,17 +75,17 @@ export async function ApplicationLayout({
     "ltr"
   )
   const initialTheme = getCookieValue(
-    cookieStore.get("color-theme")?.value,
+    cookieStore.get("color_theme")?.value,
     themes,
     "system"
   )
   const htmlCustomizerAttributes = {
     "color-ground":
-      cookieStore.get("color-ground")?.value ??
-      cookieStore.get("color-base")?.value ??
+      cookieStore.get("color_ground")?.value ??
+      cookieStore.get("color_base")?.value ??
       "neutral",
-    "color-paint": cookieStore.get("color-paint")?.value ?? "primary",
-    "color-chart": cookieStore.get("color-chart")?.value ?? "neutral",
+    "color-paint": cookieStore.get("color_paint")?.value ?? "primary",
+    "color-chart": cookieStore.get("color_chart")?.value ?? "neutral",
     wide: initialWidth === "full-width" ? "wide" : "contained",
   }
 

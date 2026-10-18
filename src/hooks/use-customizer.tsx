@@ -92,9 +92,9 @@ export const DEFAULT_CUSTOMIZER_STATE: CustomizerState = {
 }
 
 const STORAGE_KEYS: Record<keyof CustomizerState, string> = {
-  ground: "color-ground",
-  paint: "color-paint",
-  chart: "color-chart",
+  ground: "color_ground",
+  paint: "color_paint",
+  chart: "color_chart",
 }
 
 const OPTION_GROUPS: Record<keyof CustomizerState, ColorOption[]> = {
@@ -120,7 +120,8 @@ function applyCustomizerState(state: CustomizerState) {
   const root = document.documentElement
 
   Object.entries(state).forEach(([key, value]) => {
-    root.setAttribute(STORAGE_KEYS[key as keyof CustomizerState], value)
+    // HTML attributes stay kebab-case to preserve the existing CSS selectors.
+    root.setAttribute(`color-${key}`, value)
   })
 }
 
@@ -149,12 +150,12 @@ export function useCustomizer() {
   useEffect(() => {
     if (!groundCookie.ready || !paintCookie.ready || !chartCookie.ready) return
 
-    const previousValue = getCookie("color-base")
+    const previousValue = getCookie("color_base")
     if (previousValue !== undefined) {
       if (getCookie(STORAGE_KEYS.ground) === undefined) {
         groundCookie.setValue(validateKey("ground", previousValue))
       }
-      removeCookie("color-base")
+      removeCookie("color_base")
     }
     applyCustomizerState(customizer)
   }, [
