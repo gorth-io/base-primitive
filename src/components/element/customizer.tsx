@@ -114,15 +114,19 @@ export function Customizer({
   }
 
   const customizerBody = (
-    <div className='no-scrollbar flex min-h-0 flex-1 flex-col gap-2 overflow-x-hidden overflow-y-auto p-4'>
-      <ThemeConfig />
-      <SidebarConfig />
-      <LayoutConfig />
-      <DirConfig />
-      <WidthConfig />
-      <NavbarBehaviorConfig />
-      <Separator className='-mx-4 my-2 shrink-0' />
-      <CustomizerConfig customizer={customizer} setColor={setColor} />
+    <div className='no-scrollbar flex min-h-0 flex-1 flex-col overflow-x-hidden overflow-y-auto'>
+      <div className='flex flex-col gap-2 p-4'>
+        <ThemeConfig />
+        <SidebarConfig />
+        <LayoutConfig />
+        <DirConfig />
+        <WidthConfig />
+        <NavbarBehaviorConfig />
+      </div>
+      <Separator />
+      <div className='p-4'>
+        <CustomizerConfig customizer={customizer} setColor={setColor} />
+      </div>
     </div>
   )
 
@@ -611,13 +615,13 @@ function WidthConfig() {
       >
         {[
           {
-            value: 'centered',
-            label: 'Centered',
+            value: 'narrow',
+            label: 'Narrow',
             icon: IconWidthCentered,
           },
           {
-            value: 'full-width',
-            label: 'Full width',
+            value: 'wide',
+            label: 'Wide',
             icon: IconWidthFull,
           },
         ].map((item) => (
@@ -625,7 +629,7 @@ function WidthConfig() {
         ))}
       </RadioGroupPrimitive>
       <div id='width-description' className='sr-only'>
-        Choose between a centered container or a full-width page
+        Choose between a narrow container or a wide page
       </div>
     </div>
   )

@@ -5,7 +5,7 @@ import { getCookie, setCookie } from '@/lib/cookies'
 
 export type Collapsible = 'offcanvas' | 'icon' | 'none'
 export type LayoutVariant = 'inset' | 'sidebar' | 'floating'
-export type LayoutWidth = 'centered' | 'full-width'
+export type LayoutWidth = 'narrow' | 'wide'
 export type NavbarBehavior = 'sticky' | 'scroll'
 
 export const sidebarCollapsibles: Collapsible[] = [
@@ -18,7 +18,7 @@ export const sidebarVariants: LayoutVariant[] = [
   'floating',
   'inset',
 ]
-export const layoutWidths: LayoutWidth[] = ['centered', 'full-width']
+export const layoutWidths: LayoutWidth[] = ['narrow', 'wide']
 export const navbarBehaviors: NavbarBehavior[] = ['sticky', 'scroll']
 
 // Cookie constants following the pattern from sidebar.tsx
@@ -31,7 +31,7 @@ const LAYOUT_COOKIE_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 // Default values
 const DEFAULT_VARIANT = 'sidebar'
 const DEFAULT_COLLAPSIBLE = 'icon'
-const DEFAULT_WIDTH = 'centered'
+const DEFAULT_WIDTH = 'narrow'
 const DEFAULT_NAVBAR_BEHAVIOR = 'sticky'
 
 type LayoutContextType = {
@@ -160,7 +160,7 @@ export function LayoutProvider({
     document.documentElement.removeAttribute('layout-width')
     document.documentElement.setAttribute(
       'wide',
-      width === 'full-width' ? 'wide' : 'contained'
+      width === 'wide' ? 'wide' : 'contained'
     )
   }, [initialWidth, width])
 

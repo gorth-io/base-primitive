@@ -21,7 +21,7 @@ const layoutCollapsibles = new Set<Collapsible>([
   "icon",
   "none",
 ])
-const layoutWidths = new Set<LayoutWidth>(["centered", "full-width"])
+const layoutWidths = new Set<LayoutWidth>(["narrow", "wide"])
 const navbarBehaviors = new Set<NavbarBehavior>(["sticky", "scroll"])
 const directions = new Set<Direction>(["ltr", "rtl"])
 const themes = new Set(["light", "dark", "system"] as const)
@@ -62,7 +62,7 @@ export async function ApplicationLayout({
   const initialWidth = getCookieValue(
     cookieStore.get("layout_width")?.value,
     layoutWidths,
-    "centered"
+    "narrow"
   )
   const initialNavbarBehavior = getCookieValue(
     cookieStore.get("navbar_behavior")?.value,
@@ -86,7 +86,7 @@ export async function ApplicationLayout({
       "neutral",
     "color-paint": cookieStore.get("color_paint")?.value ?? "primary",
     "color-chart": cookieStore.get("color_chart")?.value ?? "neutral",
-    wide: initialWidth === "full-width" ? "wide" : "contained",
+    wide: initialWidth === "wide" ? "wide" : "contained",
   }
 
   return (
