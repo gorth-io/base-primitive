@@ -264,7 +264,7 @@ function ColorGroup({
             }
           >
             <RadioPrimitive.Indicator>
-              <Check className='size-4 stroke-[3] text-current drop-shadow-sm' />
+              <Check className='size-4 stroke-2 text-current drop-shadow-sm' />
             </RadioPrimitive.Indicator>
           </RadioPrimitive.Root>
         ))}

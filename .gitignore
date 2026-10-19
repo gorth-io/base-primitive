@@ -1,7 +1,9 @@
 .idea
 
-scripts
 node_modules
 dist
 .ui
 **/.DS_Store
+
+# scripts/
+# tests/
