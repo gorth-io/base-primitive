@@ -22,22 +22,22 @@ importers:
         version: 1.2.7(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@shadcn/helpers':
         specifier: ^0.3.0
-        version: 0.3.0(@tanstack/ai@0.69.0(zod@4.6.7))
+        version: 0.3.0(@tanstack/ai@0.70.0(zod@4.6.7))
       '@shadcn/react':
         specifier: ^0.3.1
         version: 0.3.1(@types/react@19.3.0)(react@19.3.1)
       '@tanstack/ai':
-        specifier: ^0.69.0
-        version: 0.69.0(zod@4.6.7)
+        specifier: ^0.70.0
+        version: 0.70.0(zod@4.6.7)
       '@tanstack/ai-react':
-        specifier: ^0.30.4
-        version: 0.30.4(@tanstack/ai@0.69.0(zod@4.6.7))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(zod@4.6.7)
+        specifier: ^0.31.0
+        version: 0.31.0(@tanstack/ai@0.70.0(zod@4.6.7))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(zod@4.6.7)
       '@tanstack/react-form':
         specifier: ^1.33.5
         version: 1.33.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@tanstack/react-query':
-        specifier: ^5.104.4
-        version: 5.104.4(@types/react@19.3.0)(react@19.3.1)
+        specifier: ^5.104.5
+        version: 5.104.5(@types/react@19.3.0)(react@19.3.1)
       '@tanstack/react-ranger':
         specifier: ^0.0.5
         version: 0.0.5(react@19.3.1)
@@ -81,8 +81,8 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       lucide-react:
-        specifier: ^1.59.0
-        version: 1.59.0(@types/react@19.3.0)(react@19.3.1)
+        specifier: ^1.60.0
+        version: 1.60.0(@types/react@19.3.0)(react@19.3.1)
       media-chrome:
         specifier: ^4.19.3
         version: 4.19.3(react@19.3.1)
@@ -117,8 +117,8 @@ importers:
         specifier: ^5.4.9
         version: 5.4.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react-resizable-panels:
-        specifier: ^4.14.6
-        version: 4.14.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^4.14.7
+        version: 4.14.7(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react-svg-credit-card-payment-icons:
         specifier: ^6.0.4
         version: 6.0.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -130,7 +130,7 @@ importers:
         version: 3.8.0(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react-is@19.3.0)(react@19.3.1)(redux@5.0.1)
       shadcn:
         specifier: ^4.22.1
-        version: 4.22.1
+        version: 4.22.1(@cfworker/json-schema@4.1.1)
       shiki:
         specifier: ^4.5.0
         version: 4.5.0
@@ -379,6 +379,9 @@ packages:
     peerDependencies:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
+
+  '@cfworker/json-schema@4.1.1':
+    resolution: {integrity: sha512-gAmrUZSGtKc3AiBL71iNWxDsyUC5uMaKKGdvzYsBoTW/xi42JQHl7eKV2OYzCUqvc+D2RCcf7EXY2iCyFIk6og==}
 
   '@date-fns/tz@1.5.0':
     resolution: {integrity: sha512-lwYN/vDPeNRULcepoE/LO2Pgx+7/RV+S9ARfbc9lr2DtGkOD7pAiruHvbR1RX3Qyf6ja47EWJDMsNK5vK08DJg==}
@@ -1176,17 +1179,17 @@ packages:
   '@tailwindcss/postcss@4.3.3':
     resolution: {integrity: sha512-JTSZZGQi1AyKirbLN3azmjVzef92tcX7h+iSqPdaeStyFpGpDlKvvpxeOE8njhbUanbRwr3z8DyzhICWnMtQeg==}
 
-  '@tanstack/ai-client@0.39.3':
-    resolution: {integrity: sha512-co3F4rh1xhadedk5wfvNV+sja5iueIS/S8+KGZjQ/C6+IA68rfE9iWhe2xNO4hYX4bOvyXnA5XX/d0KOFduZDA==}
+  '@tanstack/ai-client@0.40.0':
+    resolution: {integrity: sha512-gIBMsz3SbuFGRaPtbtIN4mCFHvkPklA+ZG/t6AI7GscXGyIEECWlFJBAU+vYKHvmxZyI46Yhu6vdGNxKx05A+Q==}
 
   '@tanstack/ai-event-client@0.13.1':
     resolution: {integrity: sha512-lCPcshu6Sd4tFNeMSr+HXgdqCGupYU2cpJZVUent4GkFx41dXzrBaKkwOgkji6olDBT99OBagWCce1NZ15XeJA==}
 
-  '@tanstack/ai-react@0.30.4':
-    resolution: {integrity: sha512-z2E+zb1hifsFtUZGHRq6InxjPF3WmjN66JXcCYmbVT5c/HWsdvgN3KrJ49jgsuMXHZYch1zi6Y3REdXGj8c4fQ==}
+  '@tanstack/ai-react@0.31.0':
+    resolution: {integrity: sha512-21VJ3nEU2yVbB/7OlW/1iLR3YC3NxZl6uRl2C/yyyx+2l1GaFm1oGIX1mwlBHe8jePLU8ddokCXSh9Jt/YogKw==}
     peerDependencies:
       '@mcp-ui/client': ^7
-      '@tanstack/ai': ^0.69.0
+      '@tanstack/ai': ^0.70.0
       '@types/react': '>=18.0.0'
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
@@ -1196,11 +1199,11 @@ packages:
       react-dom:
         optional: true
 
-  '@tanstack/ai-utils@0.4.2':
-    resolution: {integrity: sha512-ucSgSK9kLloInqr/7s0VZlp1IFtbpgPnskISvnLXti/hc8koqXc4Zv9pfTTc8V80WzIKYWMf+ZgSIDeFM50eCw==}
+  '@tanstack/ai-utils@0.5.0':
+    resolution: {integrity: sha512-7RQHPWoon+EPDx6RXb1EAuRWPLijewROF8C56yfVANPeIrIeEBeYVdE8c//cMPDNd+3XS1bgehEg754Aw7htjg==}
 
-  '@tanstack/ai@0.69.0':
-    resolution: {integrity: sha512-Y018M4Cg3LPr1meRoVG/ePDB1mdazL9cPBA7bnm8WJm2LT0cN2LoUEXRimKSZjyYY7G+9BtQeNiKlaLJkbqHKQ==}
+  '@tanstack/ai@0.70.0':
+    resolution: {integrity: sha512-8GVrbtmoiIQhhQ4RStu1F5hEYE1GV2ju7fjeSswTe+ru9wmWW1ZwHcGkoxqV/5KqBrSV44sqj5hLAAQqRGxx6A==}
     engines: {node: '>=18'}
     peerDependencies:
       '@opentelemetry/api': '>=1.9.0'
@@ -1235,8 +1238,8 @@ packages:
     resolution: {integrity: sha512-y/xtNPNt/YeyoVxE/JCx+T7yjEzpezmbb+toK8DDD1P4m7Kzs5YR956+7OKexG3f8aXgC3rLZl7b1V+yNUSy5w==}
     engines: {node: '>=18'}
 
-  '@tanstack/query-core@5.104.4':
-    resolution: {integrity: sha512-nU4Yrb8Sjn0DeVb7PKG9uiepNavys3yoxy1FX0hViY4/P6Ng/mBje2SMl7i9812rtyHKtHyqiaC/td6GkI8StA==}
+  '@tanstack/query-core@5.104.5':
+    resolution: {integrity: sha512-Q94gI8Opd+CbdVNOdj8ZCyV8WqLYitrDq1t96Xc8WZT6lY0r5iRnJLXYDxMex7EEf2v+mXvn4FcjaBKSxXZQ9A==}
 
   '@tanstack/ranger@0.0.4':
     resolution: {integrity: sha512-HELFnxzbdxtRemgN6RdT2G7ilE1LtcNNi2oNo53ypb6nZiEST0hYHUdl54QJwaO9UwLN5NToXmcnPRMvLxyJGg==}
@@ -1251,8 +1254,8 @@ packages:
       '@tanstack/react-start':
         optional: true
 
-  '@tanstack/react-query@5.104.4':
-    resolution: {integrity: sha512-YD5QkvUNy8Ey3LbOy2vwL97JjoYycwDv++cWAibTe+9BLYvl3c09XpYp5dZ2VcxcguwoDhGF+utYJYb79RB36w==}
+  '@tanstack/react-query@5.104.5':
+    resolution: {integrity: sha512-RORgFe052U+93weaNuqg7qHq7vNVNzXN/VrXqD4bbAuQCWUqOl2lV5Ui9flWk5CVvMyL/Bh27QWhzwH0aaOx9g==}
     peerDependencies:
       '@types/react': ^18 || ^19
       react: ^18 || ^19
@@ -2661,8 +2664,8 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@1.59.0:
-    resolution: {integrity: sha512-5qgMyyCPU6OvnKpLS2t693+ZtiqA8oaSweWoUows0BLFKFf6V75m4+CptpmohZHpD5IuOVIBXHBBiv2vpLJmtw==}
+  lucide-react@1.60.0:
+    resolution: {integrity: sha512-UqxOW0FgAfDyb9VmjKb6/BkOzW6yfhf/QNboKtS2NDsscnNRW2CDzlyhbMKBQ1ontmcxuIDqHJ2AVgFR3NI+GA==}
     peerDependencies:
       '@types/react': '*'
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -3112,8 +3115,8 @@ packages:
       '@types/react':
         optional: true
 
-  react-resizable-panels@4.14.6:
-    resolution: {integrity: sha512-YqkTuTDV1ncknnR5YN/iI8icpClippc9/10job9zJIppt2r8yUwaVfVxhzFNO+3DIxrnAwhcMMs1FdX5xt9C9A==}
+  react-resizable-panels@4.14.7:
+    resolution: {integrity: sha512-UP8lccy1yGA8p8c6UvPaMDnqYePv/CWOv3R6rTAJ9f+UmuaeiTFDJlvcp5rFu5GJcQ1ofCmkjbzp0HceJXZRbw==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -4040,6 +4043,8 @@ snapshots:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
+  '@cfworker/json-schema@4.1.1': {}
+
   '@date-fns/tz@1.5.0': {}
 
   '@dimforge/rapier3d-compat@0.12.0': {}
@@ -4279,7 +4284,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@modelcontextprotocol/sdk@1.32.1(zod@4.6.7)':
+  '@modelcontextprotocol/sdk@1.32.1(@cfworker/json-schema@4.1.1)(zod@4.6.7)':
     dependencies:
       '@hono/node-server': 2.1.1(hono@4.13.8)
       ajv: 8.20.0
@@ -4298,6 +4303,8 @@ snapshots:
       raw-body: 3.0.2
       zod: 4.6.7
       zod-to-json-schema: 3.25.2(zod@4.6.7)
+    optionalDependencies:
+      '@cfworker/json-schema': 4.1.1
     transitivePeerDependencies:
       - supports-color
 
@@ -4543,9 +4550,9 @@ snapshots:
 
   '@sec-ant/readable-stream@0.4.1': {}
 
-  '@shadcn/helpers@0.3.0(@tanstack/ai@0.69.0(zod@4.6.7))':
+  '@shadcn/helpers@0.3.0(@tanstack/ai@0.70.0(zod@4.6.7))':
     optionalDependencies:
-      '@tanstack/ai': 0.69.0(zod@4.6.7)
+      '@tanstack/ai': 0.70.0(zod@4.6.7)
 
   '@shadcn/react@0.3.1(@types/react@19.3.0)(react@19.3.1)':
     optionalDependencies:
@@ -4699,11 +4706,12 @@ snapshots:
       postcss: 8.5.28
       tailwindcss: 4.3.3
 
-  '@tanstack/ai-client@0.39.3(zod@4.6.7)':
+  '@tanstack/ai-client@0.40.0(zod@4.6.7)':
     dependencies:
-      '@tanstack/ai': 0.69.0(zod@4.6.7)
+      '@tanstack/ai': 0.70.0(zod@4.6.7)
       '@tanstack/ai-event-client': 0.13.1
-      '@tanstack/ai-utils': 0.4.2
+      '@tanstack/ai-utils': 0.5.0
+      '@tanstack/store': 0.11.2
     transitivePeerDependencies:
       - '@opentelemetry/api'
       - zod
@@ -4712,10 +4720,10 @@ snapshots:
     dependencies:
       '@tanstack/devtools-event-client': 0.4.4
 
-  '@tanstack/ai-react@0.30.4(@tanstack/ai@0.69.0(zod@4.6.7))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(zod@4.6.7)':
+  '@tanstack/ai-react@0.31.0(@tanstack/ai@0.70.0(zod@4.6.7))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(zod@4.6.7)':
     dependencies:
-      '@tanstack/ai': 0.69.0(zod@4.6.7)
-      '@tanstack/ai-client': 0.39.3(zod@4.6.7)
+      '@tanstack/ai': 0.70.0(zod@4.6.7)
+      '@tanstack/ai-client': 0.40.0(zod@4.6.7)
       '@tanstack/markdown': 0.0.13(react@19.3.1)
       '@types/react': 19.3.0
       react: 19.3.1
@@ -4726,14 +4734,15 @@ snapshots:
       - octane
       - zod
 
-  '@tanstack/ai-utils@0.4.2': {}
+  '@tanstack/ai-utils@0.5.0': {}
 
-  '@tanstack/ai@0.69.0(zod@4.6.7)':
+  '@tanstack/ai@0.70.0(zod@4.6.7)':
     dependencies:
       '@ag-ui/core': 1.0.0(zod@4.6.7)
+      '@cfworker/json-schema': 4.1.1
       '@standard-schema/spec': 1.1.0
       '@tanstack/ai-event-client': 0.13.1
-      '@tanstack/ai-utils': 0.4.2
+      '@tanstack/ai-utils': 0.5.0
       fast-json-patch: 3.1.1
       partial-json: 0.1.7
     transitivePeerDependencies:
@@ -4755,7 +4764,7 @@ snapshots:
 
   '@tanstack/pacer-lite@0.1.1': {}
 
-  '@tanstack/query-core@5.104.4': {}
+  '@tanstack/query-core@5.104.5': {}
 
   '@tanstack/ranger@0.0.4': {}
 
@@ -4767,9 +4776,9 @@ snapshots:
     transitivePeerDependencies:
       - react-dom
 
-  '@tanstack/react-query@5.104.4(@types/react@19.3.0)(react@19.3.1)':
+  '@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1)':
     dependencies:
-      '@tanstack/query-core': 5.104.4
+      '@tanstack/query-core': 5.104.5
       react: 19.3.1
     optionalDependencies:
       '@types/react': 19.3.0
@@ -6002,7 +6011,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@1.59.0(@types/react@19.3.0)(react@19.3.1):
+  lucide-react@1.60.0(@types/react@19.3.0)(react@19.3.1):
     dependencies:
       react: 19.3.1
     optionalDependencies:
@@ -6415,7 +6424,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.3.0
 
-  react-resizable-panels@4.14.6(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  react-resizable-panels@4.14.7(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
@@ -6595,14 +6604,14 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shadcn@4.22.1:
+  shadcn@4.22.1(@cfworker/json-schema@4.1.1):
     dependencies:
       '@babel/core': 7.29.7
       '@babel/parser': 7.29.9
       '@babel/plugin-transform-typescript': 7.29.9(@babel/core@7.29.7)
       '@babel/preset-typescript': 7.29.7(@babel/core@7.29.7)
       '@dotenvx/dotenvx': 1.75.1
-      '@modelcontextprotocol/sdk': 1.32.1(zod@4.6.7)
+      '@modelcontextprotocol/sdk': 1.32.1(@cfworker/json-schema@4.1.1)(zod@4.6.7)
       '@shadcn/registry': 0.2.0
       '@types/validate-npm-package-name': 4.0.2
       browserslist: 4.29.3
