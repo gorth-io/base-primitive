@@ -1,9 +1,25 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/custom/button"
-import imageUnderMaintenance from "@/assets/illustration/girl-doing-yoga-new.png"
+import MiscellaneousLayout from "@/layouts/miscellaneous"
+import { Fence } from "@/cores/lucide"
+// import imageUnderMaintenance from "@/assets/illustration/girl-doing-yoga-new.png"
 
 export default function UnderMaintenancePage() {
+  return (
+    <MiscellaneousLayout
+      name={503}
+      icon={Fence}
+      color="text-professional-warning"
+      title="Under Maintenance!"
+      description={[
+        "The site is not available at the moment.",
+        "We'll be back online shortly."
+      ]}
+    />
+  )
+}
+function UnderMaintenancePageX() {
   return (
     <>
       <div className="container mx-auto">
@@ -15,7 +31,7 @@ export default function UnderMaintenancePage() {
             Back to home
           </Button>
           <div className="mt-6">
-            <Image src={imageUnderMaintenance} alt="page-misc" width={512} height={512} loading="eager" className="h-auto w-auto max-w-full visible"/>
+            {/* <Image src={imageUnderMaintenance} alt="page-misc" width={512} height={512} loading="eager" className="h-auto w-auto max-w-full visible"/> */}
           </div>
         </div>
       </div>

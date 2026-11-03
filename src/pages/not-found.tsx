@@ -1,9 +1,26 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/custom/button"
-import imageNotFound from "@/assets/illustration/page-misc-error-new.png"
+import MiscellaneousLayout from "@/layouts/miscellaneous"
+import { CircleAlert } from "@/cores/lucide"
+// import imageNotFound from "@/assets/illustration/page-misc-error-new.png"
 
 export default function NotFoundPage() {
+  return (
+    <MiscellaneousLayout
+      name={404}
+      icon={CircleAlert}
+      color="text-professional-warning"
+      title="Page Not Found"
+      description={[
+        "It seems like the page you're looking for",
+        "does not exist or might have been removed."
+      ]}
+    />
+  )
+}
+
+function NotFoundPageX() {
   return (
     <>
       <div className="container mx-auto">
@@ -15,7 +32,7 @@ export default function NotFoundPage() {
             Back to home
           </Button>
           <div className="mt-6">
-            <Image src={imageNotFound} alt="page-misc" width={512} height={512} loading="eager" className="h-auto w-auto max-w-full visible"/>
+            {/* <Image src={imageNotFound} alt="page-misc" width={512} height={512} loading="eager" className="h-auto w-auto max-w-full visible"/> */}
           </div>
         </div>
       </div>

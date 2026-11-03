@@ -1,5 +1,5 @@
 {
-  "name": "@gorth/primitive",
+  "name": "@gorth-io/primitive",
   "version": "0.0.0-alpha.5",
   "description": "Shared shadcn-based UI package",
   "type": "module",
@@ -16,6 +16,10 @@
     "type": "git",
     "url": "git+https://github.com/gorth-io/base-primitive.git"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,6 +27,13 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": "24.x"
+  },
+  "packageManager": "bun@1.4.4",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -139,30 +150,18 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
   "scripts": {
     "build": "tsdown --minify",
-    "prepack": "pnpm build",
-    "update": "pnpm update",
-    "error": "pnpm build",
+    "prepack": "bun run build",
+    "update": "bun update",
+    "error": "bun run build",
     "dev": "tsdown --watch",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit",
-    "typecheck:http": "tsc --project tsconfig.http.json",
     "test": "vitest run",
     "test:watch": "vitest",
-    "shadcn": "pnpm dlx shadcn@latest add -a -o",
-    "shadcn:ui": "pnpm dlx shadcn@latest add -o -p src/components/ui",
-    "shadcn:ui:all": "pnpm dlx shadcn@latest add -a -o -p src/components/ui",
-    "shadcn:io": "pnpm dlx shadcn@latest add -o -p src/components/io",
-    "shadcn:ui:list": "bash ./scripts/shadcn-ui-list.sh",
-    "shadcn:io:list": "bash ./scripts/shadcn-io-list.sh",
-    "shadcn:io:backgrounds": "bash ./scripts/shadcn-io-backgrounds.sh",
-    "shadcn:io:hooks": "bash ./scripts/shadcn-io-hooks.sh"
+    "shadcn": "shadcn add --all --override"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
@@ -237,6 +236,5 @@
     "tsdown": "^0.23.4",
     "typescript": "^5.9.3",
     "vitest": "^5.1.0"
-  },
-  "packageManager": "pnpm@10.33.4"
+  }
 }

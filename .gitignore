@@ -5,5 +5,4 @@ dist
 .ui
 **/.DS_Store
 
-# scripts/
-# tests/
+.npmrc

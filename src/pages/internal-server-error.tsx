@@ -1,9 +1,26 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/custom/button"
-import imageUnderMaintenance from "@/assets/illustration/page-misc-error-new.png"
+import MiscellaneousLayout from "@/layouts/miscellaneous"
+import { CircleX } from "@/cores/lucide"
+// import imageUnderMaintenance from "@/assets/illustration/page-misc-error-new.png"
 
 export default function InternalServerErrorPage() {
+  return (
+    <MiscellaneousLayout
+      name={500}
+      icon={CircleX}
+      color="text-professional-warning"
+      title="Oops! Something went wrong :)" // "Internal Server Error"
+      description={[
+        "We apologize for the inconvenience.",
+        "Please try again later."
+      ]}
+    />
+  )
+}
+
+function InternalServerErrorPageX() {
   return (
     <>
       <div className="container mx-auto">
@@ -16,7 +33,7 @@ export default function InternalServerErrorPage() {
             Back to home
           </Button>
           <div className="mt-6">
-            <Image src={imageUnderMaintenance} alt="page-misc" width={512} height={512} loading="eager" className="h-auto w-auto max-w-full visible"/>
+            {/* <Image src={imageUnderMaintenance} alt="page-misc" width={512} height={512} loading="eager" className="h-auto w-auto max-w-full visible"/> */}
           </div>
         </div>
       </div>
