@@ -10,7 +10,8 @@
     "gorth",
     "shadcn",
     "ui",
-    "react"
+    "react",
+    "client"
   ],
   "repository": {
     "type": "git",
