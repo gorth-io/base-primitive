@@ -1,6 +1,6 @@
 {
   "name": "@gorth-io/primitive",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.7",
   "description": "React UI components, Tailwind CSS themes, layouts, hooks, and TanStack integrations for the gorth-io ecosystem.",
   "type": "module",
   "author": "Gorthenburg",
