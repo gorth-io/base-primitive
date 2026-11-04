@@ -1,38 +1,51 @@
-# @gorth/primitive
+# @gorth-io/primitive
 
-Shared React UI library.
+React UI components, Tailwind CSS themes, layouts, hooks, and TanStack integrations for the **gorth-io** ecosystem.
 
-## Install from GitHub
+| Includes | Public imports |
+| --- | --- |
+| Custom components | `@gorth-io/primitive/custom/*` |
+| Default components and patterns | `@gorth-io/primitive/default/*`, `pattern/*` |
+| Layouts, providers, and hooks | `@gorth-io/primitive/layouts/*`, `providers/*`, `hooks/*` |
+| TanStack, icons, and utilities | `@gorth-io/primitive/cores/*`, `utils/*` |
+| Shared styles and assets | `@gorth-io/primitive/globals.css`, `assets/*` |
+
+## Installation
+
+Use Node.js 24 and install from the npm registry with Bun:
 
 ```bash
-pnpm add @gorth/primitive@github:goraria/base-primitive
+bun add @gorth-io/primitive
 ```
 
-Or via dependency alias in another project:
+React and React DOM are peer dependencies. Next.js integrations additionally use
+the optional Next.js and next-themes peers.
+
+Example dependency declaration (`0.0.0` is a demo version; replace it with an available release):
 
 ```json
 {
   "dependencies": {
-    "@gorth/primitive": "github:goraria/base-primitive"
+    "@gorth-io/primitive": "0.0.0"
   }
 }
 ```
 
 ## Usage
 
-Import Tailwind once, then import the Primitive source stylesheet. Primitive
-registers its own component source, so consumers do not need a `node_modules`
+Import Tailwind once, then import the shared stylesheet. Primitive
+registers its own component sources and build output, so consumers do not need a `node_modules`
 `@source` path:
 
 ```css
 @import "tailwindcss";
-@import "@gorth/primitive/globals.css";
+@import "@gorth-io/primitive/globals.css";
 
 @source "../**/*.{ts,tsx}";
 ```
 
 ```tsx
-import { Button } from "@gorth/primitive/custom/button";
+import { Button } from "@gorth-io/primitive/custom/button";
 
 export function Demo() {
   return <Button>Click me</Button>;
@@ -42,21 +55,22 @@ export function Demo() {
 ## Development
 
 ```bash
-pnpm install
-pnpm build
+bun install --frozen-lockfile
+bun run build
+bun run dev
 ```
 
 ## Caller and fetcher
 
-Based on the Video/Reader application utilities. Only Primitive is changed;
-existing app-local utilities are not migrated automatically.
+HTTP helpers support application-owned clients, authentication retry policies,
+and notifications without reading application environment variables.
 
 ### Browser and Electron renderer
 
 ```tsx
 "use client";
 
-import { createCaller } from "@gorth/primitive/utils/caller";
+import { createCaller } from "@gorth-io/primitive/utils/caller";
 
 export const { caller, http, createQueryService, createMutationService } =
   createCaller({
@@ -73,8 +87,8 @@ export const useUser = createQueryService<{ name: string }, void>({
 ```
 
 Wrap query hooks in `QueryClientProvider` from
-`@gorth/primitive/cores/tanstack/query`. Mount `Toaster` from
-`@gorth/primitive/custom/toast` for default notifications, or pass `notify`
+`@gorth-io/primitive/cores/tanstack/query`. Mount `Toaster` from
+`@gorth-io/primitive/custom/toast` for default notifications, or pass `notify`
 to integrate an app's own toaster. A no-op `notify` disables notifications.
 
 - `caller`, `http`, `useCallerQuery`, `useCallerMutation`,
@@ -100,7 +114,7 @@ to integrate an app's own toaster. A no-op `notify` disables notifications.
 ### Server / Next.js Route Handler
 
 ```ts
-import { fetcher, toWebResponse } from "@gorth/primitive/utils/fetcher";
+import { fetcher, toWebResponse } from "@gorth-io/primitive/utils/fetcher";
 
 export async function GET() {
   const response = await fetcher({
@@ -125,11 +139,15 @@ Axios cache headers are not Next.js Data Cache or revalidation support.
 ### Verification
 
 ```bash
-pnpm build
-pnpm typecheck:http
-pnpm test
+bun run build
+bun run typecheck
+bun run test
 ```
 
 Build first: the public-export tests consume `dist`, like an installed app.
-Publish/push the package and refresh consumers before using the new exports
-outside this repository.
+Publish the package and update consumers before using new exports outside this repository.
+
+## Related packages
+
+- [@gorth-io/structure](https://www.npmjs.com/package/@gorth-io/structure): HTTP, authentication coordination, and data infrastructure.
+- [@gorth-io/principle](https://www.npmjs.com/package/@gorth-io/principle): backend middleware and server integrations.

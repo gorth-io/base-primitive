@@ -1,7 +1,7 @@
 {
   "name": "@gorth-io/primitive",
   "version": "0.0.0-alpha.6",
-  "description": "Shared shadcn-based UI package",
+  "description": "React UI components, Tailwind CSS themes, layouts, hooks, and TanStack integrations for the gorth-io ecosystem.",
   "type": "module",
   "author": "Gorthenburg",
   "license": "GORTH",
@@ -19,6 +19,7 @@
   },
   "publishConfig": {
     "access": "public",
+    "tag": "alpha",
     "registry": "https://registry.npmjs.org"
   },
   "main": "./dist/index.js",
