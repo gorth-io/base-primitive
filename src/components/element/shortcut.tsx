@@ -103,9 +103,7 @@ export function Shortcut({ shortcuts }: { shortcuts: NavSubItem[] }) {
           >
             <PlusCircle className="size-4" />
           </Button>
-          <PopoverDescription className="sr-only">
-            Shortcuts
-          </PopoverDescription>
+          <PopoverDescription className="sr-only">Shortcuts</PopoverDescription>
         </div>
         <div className="grid max-h-[calc(27rem-1px)] grid-cols-2 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {shortcuts.map((shortcut) => (

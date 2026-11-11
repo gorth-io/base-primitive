@@ -75,7 +75,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsList, TabsTrigger } from "@/components/custom/tabs";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/utils/cn";
+import { cn } from "cn";
 
 import {
   ArrowUpDown,
@@ -663,9 +663,9 @@ export function DataTablePaginationAll<TData extends RowData>({
                     currentPage === page
                       ? undefined
                       : () => {
-                          onPageChangeStart?.();
-                          table.setPageIndex((page as number) - 1);
-                        }
+                        onPageChangeStart?.();
+                        table.setPageIndex((page as number) - 1);
+                      }
                   }
                   aria-current={currentPage === page ? "page" : undefined}
                 >
@@ -772,9 +772,9 @@ export function DataTablePagination<TData extends RowData>({
                 currentPage === page
                   ? undefined
                   : () => {
-                      onPageChangeStart?.();
-                      table.setPageIndex(page - 1);
-                    }
+                    onPageChangeStart?.();
+                    table.setPageIndex(page - 1);
+                  }
               }
               aria-label={`Go to page ${page}`}
               aria-current={currentPage === page ? "page" : undefined}

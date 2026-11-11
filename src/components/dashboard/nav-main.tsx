@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { usePathname } from "next/navigation"
-import Link from "next/link"
-import { ChevronRight, CircleDot, CircleSmall } from "lucide-react"
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { ChevronRight, CircleDot, CircleSmall } from "lucide-react";
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/custom/collapsible"
+} from "@/components/custom/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/custom/dropdown"
+} from "@/components/custom/dropdown";
 import {
   SidebarGroup,
   SidebarMenu,
@@ -28,34 +28,34 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   useSidebar,
-} from "@/components/custom/sidebar"
-import { cn } from "cn"
-import { NavCoreProps, NavMainItem } from "@/utils/interface"
+} from "@/components/custom/sidebar";
+import { cn } from "cn";
+import { NavCoreProps, NavMainItem } from "@/utils/interface";
 
 function isPathActive(pathname: string, url: string) {
-  return url !== "#" && pathname === url
+  return url !== "#" && pathname === url;
 }
 
 function NavItems({ items, ...props }: NavCoreProps) {
-  const pathname = usePathname()
-  const { state, isMobile, setOpen, setOpenMobile } = useSidebar()
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({})
+  const pathname = usePathname();
+  const { state, isMobile, setOpen, setOpenMobile } = useSidebar();
+  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
   const closeMobile = () => {
-    setOpen(true)
-    setOpenMobile(false)
-  }
+    setOpen(true);
+    setOpenMobile(false);
+  };
 
   return (
     <SidebarGroup {...props}>
       <SidebarMenu>
         {items.map((item: NavMainItem, index) => {
-          const key = `${item.title}-${item.url}-${index}`
-          const directActive = isPathActive(pathname, item.url)
+          const key = `${item.title}-${item.url}-${index}`;
+          const directActive = isPathActive(pathname, item.url);
           const childActive = Boolean(
-            item.items?.some((child) => isPathActive(pathname, child.url))
-          )
-          const hasChildren = Boolean(item.items?.length)
+            item.items?.some((child) => isPathActive(pathname, child.url)),
+          );
+          const hasChildren = Boolean(item.items?.length);
 
           if (!hasChildren) {
             return (
@@ -69,7 +69,7 @@ function NavItems({ items, ...props }: NavCoreProps) {
                   <span>{item.title}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )
+            );
           }
 
           if (state === "collapsed" && !isMobile) {
@@ -99,7 +99,7 @@ function NavItems({ items, ...props }: NavCoreProps) {
                       <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       {item.items?.map((child, childIndex) => {
-                        const active = isPathActive(pathname, child.url)
+                        const active = isPathActive(pathname, child.url);
                         return (
                           <DropdownMenuItem
                             key={`${child.title}-${child.url}-${childIndex}`}
@@ -109,7 +109,7 @@ function NavItems({ items, ...props }: NavCoreProps) {
                                 onClick={closeMobile}
                                 className={cn(
                                   "w-full",
-                                  active && "bg-accent text-accent-foreground"
+                                  active && "bg-accent text-accent-foreground",
                                 )}
                               />
                             }
@@ -119,19 +119,21 @@ function NavItems({ items, ...props }: NavCoreProps) {
                             ) : (
                               <CircleSmall className="size-4 shrink-0 text-muted-foreground" />
                             )}
-                            <span className="max-w-48 text-wrap">{child.title}</span>
+                            <span className="max-w-48 text-wrap">
+                              {child.title}
+                            </span>
                           </DropdownMenuItem>
-                        )
+                        );
                       })}
                     </DropdownMenuGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </SidebarMenuItem>
-            )
+            );
           }
 
-          const open = openItems[key] ?? childActive
-          const parentActive = directActive || (childActive && !open)
+          const open = openItems[key] ?? childActive;
+          const parentActive = directActive || (childActive && !open);
 
           return (
             <Collapsible
@@ -158,14 +160,16 @@ function NavItems({ items, ...props }: NavCoreProps) {
               <CollapsibleContent>
                 <SidebarMenuSub>
                   {item.items?.map((child, childIndex) => {
-                    const active = isPathActive(pathname, child.url)
+                    const active = isPathActive(pathname, child.url);
                     return (
                       <SidebarMenuSubItem
                         key={`${child.title}-${child.url}-${childIndex}`}
                       >
                         <SidebarMenuSubButton
                           isActive={active}
-                          render={<Link href={child.url} onClick={closeMobile} />}
+                          render={
+                            <Link href={child.url} onClick={closeMobile} />
+                          }
                         >
                           {active ? (
                             <CircleDot className="size-4 shrink-0 text-muted-foreground" />
@@ -177,34 +181,34 @@ function NavItems({ items, ...props }: NavCoreProps) {
                           </span>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
-                    )
+                    );
                   })}
                 </SidebarMenuSub>
               </CollapsibleContent>
             </Collapsible>
-          )
+          );
         })}
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }
 
 export function NavMaster(props: NavCoreProps) {
-  return <NavItems {...props} />
+  return <NavItems {...props} />;
 }
 
 export function NavOrigin(props: NavCoreProps) {
-  return <NavItems {...props} />
+  return <NavItems {...props} />;
 }
 
 export function NavCapital(props: NavCoreProps) {
-  return <NavItems {...props} />
+  return <NavItems {...props} />;
 }
 
 export function NavMain(props: NavCoreProps) {
-  return <NavItems {...props} />
+  return <NavItems {...props} />;
 }
 
 export function NavSub(props: NavCoreProps) {
-  return <NavItems {...props} />
+  return <NavItems {...props} />;
 }

@@ -1,6 +1,6 @@
-import * as React from "react"
-import Link from "next/link"
-import { LucideIcon } from "lucide-react"
+import * as React from "react";
+import Link from "next/link";
+import { LucideIcon } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -8,10 +8,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/custom/sidebar"
+} from "@/components/custom/sidebar";
 import { NavMainItem } from "@/utils/interface";
 
-interface NavCoreProps extends React.ComponentPropsWithoutRef<typeof SidebarGroup> {
+interface NavCoreProps extends React.ComponentPropsWithoutRef<
+  typeof SidebarGroup
+> {
   items: NavMainItem[];
 }
 export function NavSecondary({ items, ...props }: NavCoreProps) {
@@ -20,19 +22,19 @@ export function NavSecondary({ items, ...props }: NavCoreProps) {
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => {
-            const Icon = item.icon
+            const Icon = item.icon;
 
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton render={<Link href={item.url} />}>
-                    <Icon />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
+                  <Icon />
+                  <span>{item.title}</span>
+                </SidebarMenuButton>
               </SidebarMenuItem>
-            )
+            );
           })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
-  )
+  );
 }

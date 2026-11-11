@@ -1,10 +1,13 @@
 import React from "react";
 import {
   DropdownMenu,
-  DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator, DropdownMenuShortcut,
-  DropdownMenuTrigger
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
 } from "@/components/custom/dropdown";
 import { Button } from "@/components/custom/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -14,7 +17,7 @@ interface NotifyItemProps {
   title: string;
   description: string;
   timestamp: Date;
-  icon: LucideIcon
+  icon: LucideIcon;
 }
 
 export function NotifyButton() {
@@ -22,46 +25,46 @@ export function NotifyButton() {
     {
       title: "New Message",
       description: "You have new message from Natalie",
-      timestamp: new Date,
+      timestamp: new Date(),
       icon: Bell,
     },
     {
       title: "Japtor",
       description: "Bạn có tin nhắn mới từ Goraria",
-      timestamp: new Date,
+      timestamp: new Date(),
       icon: Bell,
     },
     {
       title: "Goraria",
       description: "Bạn có tin nhắn mới từ Goraria",
-      timestamp: new Date,
+      timestamp: new Date(),
       icon: Bell,
     },
     {
       title: "Ichibulup",
       description: "Bạn có tin nhắn mới từ Goraria",
-      timestamp: new Date,
+      timestamp: new Date(),
       icon: Bell,
     },
     {
       title: "Schweitzenburg",
       description: "Bạn có tin nhắn mới từ Goraria",
-      timestamp: new Date,
+      timestamp: new Date(),
       icon: Bell,
     },
     {
       title: "Title",
       description: "Bạn có tin nhắn mới từ Goraria",
-      timestamp: new Date,
+      timestamp: new Date(),
       icon: Bell,
     },
     {
       title: "Demo",
       description: "New",
-      timestamp: new Date,
+      timestamp: new Date(),
       icon: Bell,
     },
-  ]
+  ];
 
   return (
     <>
@@ -69,14 +72,16 @@ export function NotifyButton() {
         <DropdownMenuTrigger
           render={<Button variant="ghost" size="icon" className="relative" />}
         >
-            <Bell className="h-6 w-6" />
-            <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-white">
-              8
-            </span>
+          <Bell className="h-6 w-6" />
+          <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-white">
+            8
+          </span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-80">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="h-9 px-2.5 py-2">Thông báo</DropdownMenuLabel>
+            <DropdownMenuLabel className="h-9 px-2.5 py-2">
+              Thông báo
+            </DropdownMenuLabel>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <ScrollArea className="h-[320px]">
@@ -106,7 +111,7 @@ export function NotifyButton() {
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  )
+  );
 }
 
 export function NotifyItem({
@@ -116,7 +121,7 @@ export function NotifyItem({
   icon,
 }: NotifyItemProps) {
   const time = timestamp.toLocaleString();
-  const status = true
+  const status = true;
 
   return (
     <>
@@ -138,9 +143,7 @@ export function NotifyItem({
         <div className="flex flex-col gap-1 min-w-0">
           {/* TITLE + TIME */}
           <div className="flex items-center gap-2 min-w-0">
-            <span className="font-medium text-sm truncate">
-              {title}
-            </span>
+            <span className="font-medium text-sm truncate">{title}</span>
             <span className="text-xs text-muted-foreground whitespace-nowrap ml-auto">
               {timestamp.toLocaleTimeString()}
             </span>
@@ -157,9 +160,9 @@ export function NotifyItem({
 
         {/* CỘT 3: Button X - luôn hiển thị */}
         <div className="flex items-center">
-          <Button 
-            size="icon" 
-            variant="ghost" 
+          <Button
+            size="icon"
+            variant="ghost"
             className="h-8 w-8"
             onClick={(e) => {
               e.stopPropagation();
@@ -245,5 +248,5 @@ export function NotifyItem({
       {/*  </div>*/}
       {/*</DropdownMenuItem>*/}
     </>
-  )
+  );
 }

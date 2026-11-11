@@ -1,15 +1,28 @@
-"use client"
+"use client";
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/custom/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/custom/badge";
-import { Search, History, FileText, User, Settings, ShoppingCart } from "lucide-react";
+import {
+  Search,
+  History,
+  FileText,
+  User,
+  Settings,
+  ShoppingCart,
+} from "lucide-react";
 import { cn } from "cn";
 
 export interface SearchBarHolderProps {
@@ -17,10 +30,7 @@ export interface SearchBarHolderProps {
   onPress?: () => void;
 }
 
-export function SearchMarket({
-  placeholder,
-  onPress
-}: SearchBarHolderProps) {
+export function SearchMarket({ placeholder, onPress }: SearchBarHolderProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -37,10 +47,9 @@ export function SearchMarket({
         onSubmit={(event) => {
           event.preventDefault();
           handleSearch();
-        }}>
-        <Search
-          className="absolute left-4.5 top-4.5 size-4 z-10  text-muted-foreground"
-        />
+        }}
+      >
+        <Search className="absolute left-4.5 top-4.5 size-4 z-10  text-muted-foreground" />
         <Input
           placeholder={placeholder}
           value={searchQuery}
@@ -52,15 +61,15 @@ export function SearchMarket({
             onClick={handleSearch}
             variant="default"
             type="submit"
-            className="hover:bg-primary/90 font-bold transition-all shadow-lg shadow-primary/25 active:scale-95">
+            className="hover:bg-primary/90 font-bold transition-all shadow-lg shadow-primary/25 active:scale-95"
+          >
             Tìm kiếm
           </Button>
         </div>
       </form>
     </>
-  )
+  );
 }
-
 
 // export function SearchBar({
 //   ref,
@@ -102,7 +111,7 @@ export function SearchMarket({
 
 export function SearchBarHolder({
   placeholder = "Tìm kiếm...",
-  onPress
+  onPress,
 }: SearchBarHolderProps) {
   return (
     <div
@@ -111,9 +120,7 @@ export function SearchBarHolder({
       // activeOpacity={0.7}
     >
       <div className="h-9 relative justify-center rounded-md border border-muted-foreground">
-        <Search
-          className="absolute left-2.5 top-2.5 size-4 text-muted-foreground"
-        />
+        <Search className="absolute left-2.5 top-2.5 size-4 text-muted-foreground" />
         <span className="pl-8 text-muted-foreground text-sm">
           {placeholder}
         </span>
@@ -128,10 +135,25 @@ type SearchDialogProps = {
 };
 
 // Demo data
-type LinkItem = { label: string; href: string; icon?: React.ElementType; meta?: string };
+type LinkItem = {
+  label: string;
+  href: string;
+  icon?: React.ElementType;
+  meta?: string;
+};
 const RECENT: LinkItem[] = [
-  { label: "Đơn hàng #SO-10234", href: "/orders/so-10234", icon: History, meta: "1 giờ trước" },
-  { label: "Bài viết: Mẹo SEO 2025", href: "/blog/seo-2025", icon: History, meta: "Hôm qua" },
+  {
+    label: "Đơn hàng #SO-10234",
+    href: "/orders/so-10234",
+    icon: History,
+    meta: "1 giờ trước",
+  },
+  {
+    label: "Bài viết: Mẹo SEO 2025",
+    href: "/blog/seo-2025",
+    icon: History,
+    meta: "Hôm qua",
+  },
 ];
 
 const PAGES: LinkItem[] = [
@@ -196,7 +218,7 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
       <DialogContent
         className={cn(
           "gap-0 p-0 overflow-hidden",
-          "sm:max-w-2xl sm:rounded-lg"
+          "sm:max-w-2xl sm:rounded-lg",
         )}
       >
         <DialogHeader className="p-1.5 pr-8">
@@ -234,7 +256,9 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                 </div>
                 <ul className="">
                   {sec.items.length === 0 && (
-                    <li className="px-2 py-6 text-sm text-muted-foreground">Không tìm thấy kết quả.</li>
+                    <li className="px-2 py-6 text-sm text-muted-foreground">
+                      Không tìm thấy kết quả.
+                    </li>
                   )}
                   {sec.items.map((it) => (
                     <li key={it.href}>
@@ -243,12 +267,18 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
                         className={cn(
                           "w-full px-2 py-2 rounded-md text-left text-sm",
                           "flex items-center gap-2",
-                          "hover:bg-accent hover:text-accent-foreground transition-colors"
+                          "hover:bg-accent hover:text-accent-foreground transition-colors",
                         )}
                       >
-                        {it.icon ? <it.icon className="h-4 w-4 text-muted-foreground" /> : null}
+                        {it.icon ? (
+                          <it.icon className="h-4 w-4 text-muted-foreground" />
+                        ) : null}
                         <span className="flex-1">{it.label}</span>
-                        {it.meta ? <span className="text-xs text-muted-foreground">{it.meta}</span> : null}
+                        {it.meta ? (
+                          <span className="text-xs text-muted-foreground">
+                            {it.meta}
+                          </span>
+                        ) : null}
                       </button>
                     </li>
                   ))}
@@ -264,7 +294,8 @@ export function SearchDialog({ open, onOpenChange }: SearchDialogProps) {
           <span>Gõ để tìm • ↑↓ để chọn • Enter để mở</span>
           <div className="hidden sm:flex items-center gap-2">
             <div className="flex items-center gap-1">
-              <Kbd>Esc</Kbd><span>đóng</span>
+              <Kbd>Esc</Kbd>
+              <span>đóng</span>
             </div>
           </div>
         </DialogFooter>
@@ -280,9 +311,7 @@ function Kbd({ children }: { children: React.ReactNode }) {
       className=""
       // className="rounded border bg-muted px-1.5 py-0.5 text-[10px] font-medium border-border text-foreground/80"
     >
-      <kbd>
-        {children}
-      </kbd>
+      <kbd>{children}</kbd>
     </Badge>
   );
 }

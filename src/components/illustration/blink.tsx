@@ -102,7 +102,9 @@ export const BlinkingParticles: React.FC<BlinkingParticlesProps> = ({
   const canvasSize = React.useRef<{ w: number; h: number }>({ w: 0, h: 0 });
   const dpr = typeof window !== "undefined" ? window.devicePixelRatio : 1;
   const rafID = React.useRef<number | null>(null);
-  const resizeTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resizeTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
   const startTime = React.useRef<number | null>(null);
   const cellQueue = React.useRef<{ x: number; y: number }[]>([]);
 

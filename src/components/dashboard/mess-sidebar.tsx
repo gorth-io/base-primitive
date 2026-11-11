@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import React from "react"
-import Image from "next/image"
-import Link from "next/link"
-import { useParams } from "next/navigation"
-import { Command } from "lucide-react"
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { Command } from "lucide-react";
 
-import { NavUser } from "@/components/dashboard/nav-user"
-import { Label } from "@/components/ui/label"
+import { NavUser } from "@/components/dashboard/nav-user";
+import { Label } from "@/components/ui/label";
 import {
   Sidebar,
   SidebarContent,
@@ -20,19 +20,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/custom/sidebar"
-import { Switch } from "@/components/ui/switch"
-import { MessSidebarProps } from "@/utils/interface"
-import { cn } from "cn"
+} from "@/components/custom/sidebar";
+import { Switch } from "@/components/ui/switch";
+import { MessSidebarProps } from "@/utils/interface";
+import { cn } from "cn";
 
 export function MessSidebar({ data, auth, ...props }: MessSidebarProps) {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
-  const [activeItem, setActiveItem] = React.useState(data.navMain[0])
-  const [messages, setMessages] = React.useState(data.navMessage)
-  const params = useParams<{ id?: string }>()
-  const activeMessageId = typeof params.id === "string" ? decodeURIComponent(params.id) : ""
-  const { setOpen } = useSidebar()
+  const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
+  const [messages, setMessages] = React.useState(data.navMessage);
+  const params = useParams<{ id?: string }>();
+  const activeMessageId =
+    typeof params.id === "string" ? decodeURIComponent(params.id) : "";
+  const { setOpen } = useSidebar();
   return (
     <Sidebar
       collapsible="icon"
@@ -49,7 +50,11 @@ export function MessSidebar({ data, auth, ...props }: MessSidebarProps) {
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>
-              <SidebarMenuButton size="default" className="md:p-0" render={<Link href="/" />}>
+              <SidebarMenuButton
+                size="default"
+                className="md:p-0"
+                render={<Link href="/" />}
+              >
                 {data.brand && data.brand.logo ? (
                   <>
                     <div className="flex aspect-square size-9 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
@@ -64,11 +69,17 @@ export function MessSidebar({ data, auth, ...props }: MessSidebarProps) {
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       {data.brand.plan ? (
                         <>
-                          <span className="truncate font-medium">{data.brand.name}</span>
-                          <span className="truncate text-xs">{data.brand.plan}</span>
+                          <span className="truncate font-medium">
+                            {data.brand.name}
+                          </span>
+                          <span className="truncate text-xs">
+                            {data.brand.plan}
+                          </span>
                         </>
                       ) : (
-                        <span className="truncate font-medium text-xl">{data.brand.name}</span>
+                        <span className="truncate font-medium text-xl">
+                          {data.brand.name}
+                        </span>
                       )}
                     </div>
                   </>
@@ -99,15 +110,17 @@ export function MessSidebar({ data, auth, ...props }: MessSidebarProps) {
                         hidden: false,
                       }}
                       onClick={() => {
-                        setActiveItem(item)
-                        const mail = [...data.navMessage].sort(() => Math.random() - 0.5)
+                        setActiveItem(item);
+                        const mail = [...data.navMessage].sort(
+                          () => Math.random() - 0.5,
+                        );
                         setMessages(
                           mail.slice(
                             0,
-                            Math.max(5, Math.floor(Math.random() * 10) + 1)
-                          )
-                        )
-                        setOpen(true)
+                            Math.max(5, Math.floor(Math.random() * 10) + 1),
+                          ),
+                        );
+                        setOpen(true);
                       }}
                       isActive={activeItem?.title === item.title}
                       className="px-2.5"
@@ -130,7 +143,7 @@ export function MessSidebar({ data, auth, ...props }: MessSidebarProps) {
             auth={auth}
             nav={{
               main: data.navDropdown,
-              secondary: data.navSignal
+              secondary: data.navSignal,
             }}
           />
         </SidebarFooter>
@@ -160,7 +173,8 @@ export function MessSidebar({ data, auth, ...props }: MessSidebarProps) {
                   onClick={() => setOpen(false)}
                   className={cn(
                     "flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                    activeMessageId === mail.email && "bg-sidebar-accent text-sidebar-accent-foreground"
+                    activeMessageId === mail.email &&
+                      "bg-sidebar-accent text-sidebar-accent-foreground",
                   )}
                 >
                   <div className="flex w-full items-center gap-2">
@@ -178,5 +192,5 @@ export function MessSidebar({ data, auth, ...props }: MessSidebarProps) {
         </SidebarContent>
       </Sidebar>
     </Sidebar>
-  )
+  );
 }

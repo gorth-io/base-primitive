@@ -46,12 +46,7 @@ export function DrawSidebar({
   return (
     <SidebarProvider defaultOpen={false} className="contents min-h-0 w-auto">
       {isMobile ? (
-        <Drawer
-          modal
-          open={open}
-          onOpenChange={setOpen}
-          swipeDirection="left"
-        >
+        <Drawer modal open={open} onOpenChange={setOpen} swipeDirection="left">
           <DrawerTrigger render={trigger} />
           <DrawerContent className="h-svh w-64 gap-0">
             <DrawerTitle className="sr-only">Navigation</DrawerTitle>

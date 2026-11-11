@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/tooltip";
 import { toast } from "@/components/custom/toast";
 import { cn } from "cn";
+
 function getFormErrorMessage(error: unknown): string | undefined {
   if (typeof error === "string") return error || undefined;
   if (
@@ -148,7 +149,7 @@ export function StatusInput({
             "pr-10",
             "aria-invalid:border-professional-error aria-invalid:ring-0 aria-invalid:focus-visible:border-professional-error aria-invalid:focus-visible:ring-3 aria-invalid:focus-visible:ring-professional-error/20 dark:aria-invalid:border-professional-error dark:aria-invalid:ring-0 dark:aria-invalid:focus-visible:ring-3 dark:aria-invalid:focus-visible:ring-professional-error/40",
             trailing &&
-              "rounded-r-none focus-visible:relative focus-visible:z-10",
+            "rounded-r-none focus-visible:relative focus-visible:z-10",
             className,
           )}
         />

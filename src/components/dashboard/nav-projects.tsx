@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
 import * as React from "react";
-import Link from "next/link"
+import Link from "next/link";
 import {
   Folder,
   MoreHorizontal,
   Share,
   Trash2,
   type LucideIcon,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/custom/dropdown"
+} from "@/components/custom/dropdown";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -25,26 +25,30 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/custom/sidebar"
+} from "@/components/custom/sidebar";
 import { NavMainItem, ProjectProps } from "@/utils/interface";
 
-interface NavCoreProps extends React.ComponentPropsWithoutRef<typeof SidebarGroup> {
+interface NavCoreProps extends React.ComponentPropsWithoutRef<
+  typeof SidebarGroup
+> {
   projects: ProjectProps[];
 }
 
 export function NavProjects({ projects }: NavCoreProps) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel className="text-base font-medium">Explore</SidebarGroupLabel>
+      <SidebarGroupLabel className="text-base font-medium">
+        Explore
+      </SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton render={<Link href={item.url} />}>
-                <item.icon />
-                <span>{item.name}</span>
-              </SidebarMenuButton>
+              <item.icon />
+              <span>{item.name}</span>
+            </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger render={<SidebarMenuAction showOnHover />}>
                 <MoreHorizontal />
@@ -80,5 +84,5 @@ export function NavProjects({ projects }: NavCoreProps) {
         </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
-  )
+  );
 }
